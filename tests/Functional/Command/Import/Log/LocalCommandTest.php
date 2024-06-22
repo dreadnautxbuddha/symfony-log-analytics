@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
+use function trim;
+
 class LocalCommandTest extends KernelTestCase
 {
     protected Command $command;
@@ -202,6 +204,7 @@ class LocalCommandTest extends KernelTestCase
         ]);
 
         $this->assertEquals(1, $exitCode);
+        $this->assertEquals('The file at the specified path `unknown/path/to/file` could not be found.', trim($command_tester->getDisplay()));
     }
 
     /**
@@ -213,10 +216,11 @@ class LocalCommandTest extends KernelTestCase
 
         $exitCode = $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            'offset' => $invalidInteger,
+            '--offset' => $invalidInteger,
         ]);
 
         $this->assertEquals(1, $exitCode);
+        $this->assertEquals("The offset `{$invalidInteger}` must be an integer.", trim($command_tester->getDisplay()));
     }
 
     /**
@@ -228,10 +232,11 @@ class LocalCommandTest extends KernelTestCase
 
         $exitCode = $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            'limit' => $invalidInteger,
+            '--limit' => $invalidInteger,
         ]);
 
         $this->assertEquals(1, $exitCode);
+        $this->assertEquals("The limit `{$invalidInteger}` must be an integer.", trim($command_tester->getDisplay()));
     }
 
     /**
@@ -243,10 +248,13 @@ class LocalCommandTest extends KernelTestCase
 
         $exitCode = $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            'chunkSize' => $invalidInteger,
+            '--chunk-size' => $invalidInteger,
         ]);
 
         $this->assertEquals(1, $exitCode);
+        $this->assertEquals(
+            "The chunk size `{$invalidInteger}` must be an integer.", trim($command_tester->getDisplay())
+        );
     }
 
     public function testExecute_whenFileAtSpecifiedPathExists_shouldReturnSuccess()
@@ -301,8 +309,8 @@ class LocalCommandTest extends KernelTestCase
 
         $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            'offset' => 5,
-            'limit' => 1,
+            '--offset' => 5,
+            '--limit' => 1,
         ]);
         $log_entries = $this->repository->findAll();
         /** @var LogEntry $log_entry */
@@ -328,7 +336,7 @@ class LocalCommandTest extends KernelTestCase
 
         $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            'chunkSize' => 2,
+            '--chunk-size' => 2,
         ]);
     }
 
@@ -338,7 +346,7 @@ class LocalCommandTest extends KernelTestCase
 
         $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            'chunkSize' => 2,
+            '--chunk-size' => 2,
         ]);
         $log_entries = $this->repository->findAll();
 
