@@ -2,9 +2,12 @@
 
 namespace App\Util\File;
 
+use Closure;
 use RecursiveIterator;
 use SeekableIterator;
 use SplFileObject;
+
+use function call_user_func;
 
 /**
  * An iterator that's primarily focused on an {@see SplFileObject} and adds the ability to chunk results when iterating
@@ -23,6 +26,27 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     protected ?int $chunkSize = null;
 
+    /**
+     * The zero-based line number to seek to, and is set to `0` by default signifying that reading should start from the
+     * first line.
+     *
+     * @var int|null
+     */
+    protected ?int $offset = 0;
+
+    /**
+     * The maximum number of rows to yield, and is set to the total number of lines in the file by default signifying
+     * that all lines should be returned.
+     *
+     * @var int|null
+     */
+    protected ?int $limit = null;
+
+    /**
+     * @var Closure
+     */
+    protected Closure $chunkCallback;
+
     public function __construct(protected readonly SplFileObject $file)
     {
     }
@@ -38,18 +62,36 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     }
 
     /**
-     * Instruct the iterator to supply n number of lines to the callback that's called when iterating through the file
-     * via {@see self::each()}
+     * Instruct the iterator to supply n number of lines to the loop (be it a while loop or a foreach) that's called
+     * when iterating through the {@see SplFileObject}. Each item in the chunk will then be run through the callback,
+     * giving you the ability to choose which information about the current line you want to get. By default, the
+     * callback used will just return the value of {@see SplFileObject::fgets()}.
      *
-     * @param int|null $size
+     * Note: Beware of overriding the callback with either one that moves the inner cursor to the next, or having one
+     * that DOES NOT move the cursor at all because this might have unexpected results. By default,
+     * {@see SplFileObject::fgets()} moves the cursor to the next once run.
      *
-     * @return $this
+     * @param int|null     $size
+     * @param Closure|null $callback
+     *
+     * @return void
      */
-    public function chunk(?int $size = null): self
+    public function chunk(?int $size = null, ?Closure $callback = null): void
     {
         $this->chunkSize = $size;
+        $this->chunkCallback = $callback ?? fn (SplFileObject $file) => $file->fgets();
+    }
 
-        return $this;
+    /**
+     * Limits the number of lines to be yielded.
+     *
+     * @param int|null $limit
+     *
+     * @return void
+     */
+    public function limit(?int $limit): void
+    {
+        $this->limit = $limit;
     }
 
     /**
@@ -66,9 +108,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
         $chunk = [];
 
         for ($i = 0; $i < $this->chunkSize; $i++) {
-            $chunk[] = $this->file;
-
-            $this->next();
+            $chunk[] = call_user_func($this->chunkCallback, $this->getFile());
         }
 
         return $chunk;
@@ -79,13 +119,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function next(): void
     {
-        if ($this->chunkSize === null) {
-            $this->file->next();
-        }
-
-        for ($i = 0; $i < $this->chunkSize; $i++) {
-            $this->file->next();
-        }
+        $this->file->next();
     }
 
     /**
@@ -97,11 +131,14 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
+     * This method is run first before {@see self::current()} is executed and is used to determine whether it will be
+     * read or not
      */
     public function valid(): bool
     {
-        return $this->file->valid();
+        return ! $this->hasReachedLineLimit() && $this->file->valid();
     }
 
     /**
@@ -117,6 +154,8 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function seek(int $offset): void
     {
+        $this->offset = $offset;
+
         $this->file->seek($offset);
     }
 
@@ -134,5 +173,16 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     public function getChildren(): ?RecursiveIterator
     {
         return $this->file->getChildren();
+    }
+
+    /**
+     * Determines whether the iterator has reached the user's defined limits or not.
+     *
+     * @return bool
+     */
+    private function hasReachedLineLimit(): bool
+    {
+        return $this->limit !== null && ($this->key() - $this->offset) >= $this->limit;
+
     }
 }
