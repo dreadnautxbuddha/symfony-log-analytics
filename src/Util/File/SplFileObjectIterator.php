@@ -97,18 +97,26 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     /**
      * {@inheritDoc}
      *
+     * When chunking, the returned value will be an array of lines.
+     *
      * @todo Test performance when the chunk size reaches upwards of thousands since we are passing this object n times.
      */
     public function current(): string|array|false|SplFileObject
     {
         if ($this->chunkSize === null) {
-            return $this->file;
+            return $this->getFile();
         }
 
         $chunk = [];
-
-        for ($i = 0; $i < $this->chunkSize; $i++) {
+        $activeChunkSize = 0;
+        // Since this iterator is stateful, we can always rely on the valid() method to check if the pointer is still
+        // valid after running getFile() which may or may not always move the cursor.
+        while ($this->valid() && $activeChunkSize < $this->chunkSize) {
             $chunk[] = call_user_func($this->chunkCallback, $this->getFile());
+
+            // We can completely omit this in favor of just counting the $chunk array, but for performance purposes, we
+            // are going to stick with the good 'ol indices.
+            $activeChunkSize++;
         }
 
         return $chunk;
@@ -119,7 +127,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function next(): void
     {
-        $this->file->next();
+        $this->getFile()->next();
     }
 
     /**
@@ -127,7 +135,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function key(): int
     {
-        return $this->file->key();
+        return $this->getFile()->key();
     }
 
     /**
@@ -138,7 +146,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function valid(): bool
     {
-        return ! $this->hasReachedLineLimit() && $this->file->valid();
+        return ! $this->hasReachedLineLimit() && $this->getFile()->valid();
     }
 
     /**
@@ -146,7 +154,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function rewind(): void
     {
-        $this->file->rewind();
+        $this->getFile()->rewind();
     }
 
     /**
@@ -156,7 +164,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     {
         $this->offset = $offset;
 
-        $this->file->seek($offset);
+        $this->getFile()->seek($offset);
     }
 
     /**
@@ -164,7 +172,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function hasChildren(): bool
     {
-        return $this->file->hasChildren();
+        return $this->getFile()->hasChildren();
     }
 
     /**
@@ -172,7 +180,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function getChildren(): ?RecursiveIterator
     {
-        return $this->file->getChildren();
+        return $this->getFile()->getChildren();
     }
 
     /**
