@@ -2,29 +2,29 @@
 
 namespace App\Util\File;
 
+use Iterator;
 use SplFileObject;
 
-use function is_null;
-
 /**
- * An object that's used to iterate through an {@see SplFileObject} in a much more fluent manner.
+ * An iterator that's primarily focused on an {@see SplFileObject} and adds the ability to chunk results when iterating
+ * through its lines.
  *
  * @package App\Util\File
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class SplFileObjectIterator
+class SplFileObjectIterator implements Iterator
 {
-    public function __construct(protected SplFileObject $file)
-    {
-    }
-
     /**
      * The number of rows to chunk the file into when iterating via {@see SplFileObject::each()}
      *
      * @var int|null
      */
     protected ?int $chunkSize = null;
+
+    public function __construct(protected SplFileObject $file)
+    {
+    }
 
     /**
      * Instruct the iterator to supply n number of lines to the callback that's called when iterating through the file
@@ -42,33 +42,62 @@ class SplFileObjectIterator
     }
 
     /**
-     * Iterates through each line in the file, and passes the current object's instance to the supplied callback,
-     * allowing us to call, for example, {@see SplFileObject::fgets()} on each.
+     * {@inheritDoc}
      *
      * @todo Test performance when the chunk size reaches upwards of thousands since we are passing this object n times.
-     *
-     * @param callable $callback
-     *
-     * @return void
      */
-    public function each(callable $callback): void
+    public function current(): string|array|false
     {
-        while (! $this->file->eof()) {
-            if (is_null($this->chunkSize)) {
-                $callback($this->file);
-
-                continue;
-            }
-
-            $chunk = [];
-
-            for ($i = 0; $i < $this->chunkSize; $i++) {
-                $chunk[] = $this->file;
-
-                $this->file->next();
-            }
-
-            $callback($chunk);
+        if ($this->chunkSize === null) {
+            return $this->file->current();
         }
+
+        $chunk = [];
+
+        for ($i = 0; $i < $this->chunkSize; $i++) {
+            $chunk[] = $this->file;
+
+            $this->next();
+        }
+
+        return $chunk;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function next(): void
+    {
+        if ($this->chunkSize === null) {
+            $this->file->next();
+        }
+
+        for ($i = 0; $i < $this->chunkSize; $i++) {
+            $this->file->next();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function key(): int
+    {
+        return $this->file->key();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function valid(): bool
+    {
+        return $this->file->valid();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function rewind(): void
+    {
+        $this->file->rewind();
     }
 }

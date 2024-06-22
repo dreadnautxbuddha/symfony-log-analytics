@@ -10,14 +10,15 @@ use function array_map;
 
 class SplFileObjectIteratorTest extends TestCase
 {
-    public function testChunk_whenNumberOfLinesExceedChunk_shouldChunkLines()
+    public function testIteration_whenChunkSizeIsSupplied_shouldChunkLines()
     {
-        $file = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
         $chunks = [];
+        $file = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $file->chunk(2);
 
-        $file->chunk(2)->each(function (array $lines) use (&$chunks) {
+        foreach ($file as $lines) {
             $chunks[] = array_map(fn(SplFileObject $line) => trim($line->fgets()), $lines);
-        });
+        }
 
         $this->assertEquals(
             [
