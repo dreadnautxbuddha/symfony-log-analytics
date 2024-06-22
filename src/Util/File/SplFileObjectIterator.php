@@ -2,7 +2,8 @@
 
 namespace App\Util\File;
 
-use Iterator;
+use RecursiveIterator;
+use SeekableIterator;
 use SplFileObject;
 
 /**
@@ -13,7 +14,7 @@ use SplFileObject;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class SplFileObjectIterator implements Iterator
+class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
 {
     /**
      * The number of rows to chunk the file into when iterating via {@see SplFileObject::each()}
@@ -22,8 +23,18 @@ class SplFileObjectIterator implements Iterator
      */
     protected ?int $chunkSize = null;
 
-    public function __construct(protected SplFileObject $file)
+    public function __construct(protected readonly SplFileObject $file)
     {
+    }
+
+    /**
+     * Returns the underlying {@see SplFileObject} object, useful when iterating through it with while loop
+     *
+     * @return SplFileObject
+     */
+    public function getFile(): SplFileObject
+    {
+        return $this->file;
     }
 
     /**
@@ -46,10 +57,10 @@ class SplFileObjectIterator implements Iterator
      *
      * @todo Test performance when the chunk size reaches upwards of thousands since we are passing this object n times.
      */
-    public function current(): string|array|false
+    public function current(): string|array|false|SplFileObject
     {
         if ($this->chunkSize === null) {
-            return $this->file->current();
+            return $this->file;
         }
 
         $chunk = [];
@@ -99,5 +110,29 @@ class SplFileObjectIterator implements Iterator
     public function rewind(): void
     {
         $this->file->rewind();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function seek(int $offset): void
+    {
+        $this->file->seek($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hasChildren(): bool
+    {
+        return $this->file->hasChildren();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getChildren(): ?RecursiveIterator
+    {
+        return $this->file->getChildren();
     }
 }
