@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Support\Contracts\Entity;
 use App\Enum\Http\RequestMethod;
 use App\Repository\LogEntryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LogEntryRepository::class)]
-class LogEntry
+class LogEntry implements Entity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
