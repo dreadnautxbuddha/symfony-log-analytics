@@ -7,9 +7,11 @@ use App\Dto\Entity\Support\Contracts\EntityDto;
 use App\Dto\Entity\Support\Contracts\EntityDtoAssembler;
 use App\Enum\Http\RequestMethod;
 use DateTimeImmutable;
+use Exception;
 
 use function array_filter;
 use function array_values;
+use function count;
 use function preg_split;
 use const PREG_SPLIT_DELIM_CAPTURE;
 
@@ -45,6 +47,12 @@ class FromString implements EntityDtoAssembler
      */
     public function assemble(): ?EntityDto
     {
+        $segments = array_values(array_filter(preg_split(self::PATTERN, $this->input, -1, PREG_SPLIT_DELIM_CAPTURE)));
+
+        if (count($segments) < 5) {
+            return null;
+        }
+
         [
             $service_name,
             $logged_at,
@@ -52,16 +60,25 @@ class FromString implements EntityDtoAssembler
             $http_request_target,
             $http_version,
             $http_status_code
-        ] = array_values(array_filter(preg_split(self::PATTERN, $this->input, -1, PREG_SPLIT_DELIM_CAPTURE)));
+        ] = $segments;
 
-        return new LogEntry(
-            null,
-            $service_name,
-            new DateTimeImmutable($logged_at),
-            RequestMethod::from($http_request_method),
-            $http_request_target,
-            $http_version,
-            $http_status_code
-        );
+        try {
+            // Wrapped the log entry creation in a try/catch clause to shut up PHPStorm. We're not going to encounter
+            // DateTime errors here because we have explicitly declared the format in our {@see self::PATTERN pattern}.
+            // If we were to get a datetime that violates that, we won't have the complete segments and will thus result
+            // in this method returning `null`
+            return new LogEntry(
+                null,
+                $service_name,
+                new DateTimeImmutable($logged_at),
+                RequestMethod::from($http_request_method),
+                $http_request_target,
+                $http_version,
+                $http_status_code
+            );
+        } catch (Exception) {
+        }
+
+        return null;
     }
 }
