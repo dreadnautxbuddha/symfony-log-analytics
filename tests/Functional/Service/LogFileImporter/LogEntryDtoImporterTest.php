@@ -5,7 +5,7 @@ namespace tests\Functional\Service\LogImporter;
 use App\Dto\Entity\LogEntry\Assembler\FromString;
 use App\Entity\LogEntry;
 use App\Enum\Http\RequestMethod;
-use App\Service\LogImporter\LogEntryDtoImporter;
+use App\Service\LogFileImporter\LogEntryDtoImporter;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

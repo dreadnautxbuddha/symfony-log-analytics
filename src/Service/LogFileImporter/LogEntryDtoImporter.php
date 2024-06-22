@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\LogImporter;
+namespace App\Service\LogFileImporter;
 
 use App\Entity;
 use App\Dto\Entity\LogEntry\LogEntry as LogEntryDto;
@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * Responsible for importing {@see LogEntryDto} objects as {@see \App\Entity\LogEntry} objects
  *
- * @package App\Service\LogImporter
+ * @package App\Service\LogFileImporter
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
