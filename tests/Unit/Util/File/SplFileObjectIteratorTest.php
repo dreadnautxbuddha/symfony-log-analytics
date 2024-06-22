@@ -3,15 +3,16 @@
 namespace Tests\Unit\Util\File;
 
 use PHPUnit\Framework\TestCase;
-use App\Util\File\SplFileObject;
+use App\Util\File\SplFileObjectIterator;
+use SplFileObject;
 
 use function array_map;
 
-class SplFileObjectTest extends TestCase
+class SplFileObjectIteratorTest extends TestCase
 {
     public function testChunk_whenNumberOfLinesExceedChunk_shouldChunkLines()
     {
-        $file = new SplFileObject('tests/Data/Service/LogFileImporter/logs.log');
+        $file = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
         $chunks = [];
 
         $file->chunk(2)->each(function (array $lines) use (&$chunks) {

@@ -2,15 +2,23 @@
 
 namespace App\Util\File;
 
+use SplFileObject;
+
 use function is_null;
 
 /**
+ * An object that's used to iterate through an {@see SplFileObject} in a much more fluent manner.
+ *
  * @package App\Util\File
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class SplFileObject extends \SplFileObject
+class SplFileObjectIterator
 {
+    public function __construct(protected SplFileObject $file)
+    {
+    }
+
     /**
      * The number of rows to chunk the file into when iterating via {@see SplFileObject::each()}
      *
@@ -18,6 +26,14 @@ class SplFileObject extends \SplFileObject
      */
     protected ?int $chunkSize = null;
 
+    /**
+     * Instruct the iterator to supply n number of lines to the callback that's called when iterating through the file
+     * via {@see self::each()}
+     *
+     * @param int|null $size
+     *
+     * @return $this
+     */
     public function chunk(?int $size = null): self
     {
         $this->chunkSize = $size;
@@ -37,9 +53,9 @@ class SplFileObject extends \SplFileObject
      */
     public function each(callable $callback): void
     {
-        while (! $this->eof()) {
+        while (! $this->file->eof()) {
             if (is_null($this->chunkSize)) {
-                $callback($this);
+                $callback($this->file);
 
                 continue;
             }
@@ -47,9 +63,9 @@ class SplFileObject extends \SplFileObject
             $chunk = [];
 
             for ($i = 0; $i < $this->chunkSize; $i++) {
-                $chunk[] = $this;
+                $chunk[] = $this->file;
 
-                $this->next();
+                $this->file->next();
             }
 
             $callback($chunk);
