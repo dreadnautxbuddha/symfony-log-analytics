@@ -109,7 +109,7 @@ class CountControllerTest extends WebTestCase
             [
                 'errors' => [
                     'statusCode' => [
-                        'This value should be a valid number.',
+                        'This value should be of type ?int.',
                     ]
                 ],
             ],

@@ -3,10 +3,8 @@
 namespace App\Controller\LogEntries;
 
 use App\Controller\Support\Contracts\InvokableControllerInterface;
-use App\Entity\LogEntry;
 use App\Repository\LogEntryRepository;
 use App\Request\LogEntries\CountRequest;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
@@ -44,47 +42,27 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/logs/count', name: 'log_entries.count', methods: ['GET'])]
 class CountController implements InvokableControllerInterface
 {
-    protected LogEntryRepository $repository;
-
-    public function __construct(protected EntityManagerInterface $entityManager)
-    {
-        $this->repository = $this->entityManager->getRepository(LogEntry::class);
-    }
-
     /**
-     * @todo Move SQL query to repository for reusability
-     *
      * @param ValidatorInterface $validator
+     * @param LogEntryRepository $repository
+     *
      * @param CountRequest       $request
      *
      * @return JsonResponse
      */
     public function __invoke(
         ValidatorInterface $validator,
+        LogEntryRepository $repository,
         #[MapQueryString(validationFailedStatusCode: Response::HTTP_UNPROCESSABLE_ENTITY)]
-        CountRequest $request = new CountRequest()
+        CountRequest $request = new CountRequest(),
     ): JsonResponse
     {
-        $query = $this->repository->createQueryBuilder('log_entry')->select('count(log_entry.id) as count');
-
-        if (! empty($request->serviceNames)) {
-            $query
-                ->where('log_entry.service_name IN (:service_names)')
-                ->setParameter('service_names', $request->serviceNames);
-        }
-        if ($request->statusCode) {
-            $query
-                ->where('log_entry.http_status_code = :status_code')
-                ->setParameter('status_code', $request->statusCode);
-        }
-        if ($request->startDate) {
-            $query->where('log_entry.logged_at >= :start_date')->setParameter('start_date', $request->startDate);
-        }
-        if ($request->endDate) {
-            $query->where('log_entry.logged_at <= :end_date')->setParameter('end_date', $request->endDate);
-        }
-
-        [['count' => $count]] = $query->getQuery()->execute();
+        $count = $repository->countBy(
+            $request->serviceNames,
+            $request->statusCode,
+            $request->startDate,
+            $request->endDate
+        );
 
         return new JsonResponse(['data' => ['count' => $count]]);
     }

@@ -14,12 +14,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CountRequest
 {
     /**
-     * @todo Make {@see CountRequest::$serviceNames} readonly. Had to remove temporarily to make tests pass
+     * @todo Make {@see CountRequest::$serviceNames} and {@see CountRequest::$statusCode} readonly. Had to remove
+     *       temporarily to make tests pass
      *
-     * @param array $serviceNames
+     * @param array       $serviceNames
      * @param string|null $startDate
      * @param string|null $endDate
-     * @param string|null $statusCode
+     * @param int|null    $statusCode
      */
     public function __construct(
         #[Assert\Type('array')]
@@ -32,7 +33,7 @@ class CountRequest
         public readonly ?string $endDate = null,
 
         #[Assert\Range(min: 100, max: 599)]
-        public readonly ?string $statusCode = null,
+        public ?int $statusCode = null,
     ) {
     }
 }
