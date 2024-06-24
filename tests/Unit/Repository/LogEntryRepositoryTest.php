@@ -6,11 +6,14 @@ use App\Entity\LogEntry;
 use App\Enum\Http\RequestMethod;
 use App\Repository\LogEntryRepository;
 use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class LogEntryRepositoryTest extends KernelTestCase
 {
+    protected EntityManagerInterface $entityManager;
+
     protected function setUp(): void
     {
         parent::setUp();
