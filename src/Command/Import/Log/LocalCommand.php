@@ -2,6 +2,7 @@
 
 namespace App\Command\Import\Log;
 
+use App\CommandInput\Import\Log\LocalCommandInput;
 use App\Service\LogFileImporter\Support\Contracts\LogFileImporterInterface;
 use App\Util\File\SplFileObjectIterator;
 use SplFileObject;
@@ -11,10 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use function file_exists;
-use function filter_var;
-use const FILTER_VALIDATE_INT;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * A command responsible for importing a log file that exists in the filesystem.
@@ -29,7 +27,11 @@ use const FILTER_VALIDATE_INT;
 )]
 class LocalCommand extends Command
 {
-    public function __construct(protected LogFileImporterInterface $logFileImporter, ?string $name = null)
+    public function __construct(
+        protected LogFileImporterInterface $logFileImporter,
+        protected ValidatorInterface $validator,
+        ?string $name = null
+    )
     {
         parent::__construct($name);
     }
@@ -65,7 +67,7 @@ class LocalCommand extends Command
     /**
      * {@inheritDoc}
      *
-     * @todo Map the validation rules here into a DTO for reusability?
+     * @todo Might be a good idea to have a mapping attribute class for argument and option validation.
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -73,21 +75,14 @@ class LocalCommand extends Command
         $offset = $input->getOption('offset');
         $limit = $input->getOption('limit');
         $chunk_size = $input->getOption('chunk-size');
+        $errors = $this->validator->validate(new LocalCommandInput($path, $offset, $limit, $chunk_size));
 
-        if (! file_exists($path)) {
-            return $this->fail($output, "The file at the specified path `{$path}` could not be found.");
-        }
+        if (count($errors) > 0) {
+            foreach ($errors as $error) {
+                $output->writeln("<error>{$error->getMessage()}</error>");
+            }
 
-        if ($input->hasOption('offset') && filter_var($offset, FILTER_VALIDATE_INT) === false) {
-            return $this->fail($output, "The offset `{$offset}` must be an integer.");
-        }
-
-        if ($input->hasOption('chunk-size') && filter_var($chunk_size, FILTER_VALIDATE_INT) === false) {
-            return $this->fail($output, "The chunk size `{$chunk_size}` must be an integer.");
-        }
-
-        if ($input->hasOption('limit') && $limit !== null && filter_var($limit, FILTER_VALIDATE_INT) === false) {
-            return $this->fail($output, "The limit `{$limit}` must be an integer.");
+            return Command::FAILURE;
         }
 
         $this
@@ -95,20 +90,5 @@ class LocalCommand extends Command
             ->import(new SplFileObjectIterator(new SplFileObject($path)), $offset, $chunk_size, $limit);
 
         return Command::SUCCESS;
-    }
-
-    /**
-     * Writes an error message to the output and returns a failure exit code.
-     *
-     * @param OutputInterface $output
-     * @param string          $message
-     *
-     * @return int
-     */
-    protected function fail(OutputInterface $output, string $message): int
-    {
-        $output->writeln("<error>{$message}</error>");
-
-        return self::FAILURE;
     }
 }

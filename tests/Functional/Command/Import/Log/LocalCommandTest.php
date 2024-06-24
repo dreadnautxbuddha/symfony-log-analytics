@@ -206,56 +206,65 @@ class LocalCommandTest extends KernelTestCase
         ]);
 
         $this->assertEquals(1, $exitCode);
-        $this->assertEquals('The file at the specified path `unknown/path/to/file` could not be found.', trim($command_tester->getDisplay()));
+        $this->assertEquals('The file at the specified path could not be found.', trim($command_tester->getDisplay()));
     }
 
     /**
      * @dataProvider invalidInteger
      */
-    public function testExecute_whenOffsetIsInvalid_shouldReturnError(mixed $invalidInteger)
+    public function testExecute_whenOffsetIsInvalid_shouldReturnError(
+        mixed $invalid_integer,
+        mixed $error_message_identifier
+    )
     {
         $command_tester = new CommandTester($this->command);
 
         $exitCode = $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            '--offset' => $invalidInteger,
+            '--offset' => $invalid_integer,
         ]);
 
         $this->assertEquals(1, $exitCode);
-        $this->assertEquals("The offset `{$invalidInteger}` must be an integer.", trim($command_tester->getDisplay()));
+        $this->assertEquals("The offset {$error_message_identifier} must be an integer.", trim($command_tester->getDisplay()));
     }
 
     /**
      * @dataProvider invalidInteger
      */
-    public function testExecute_whenLimitIsInvalid_shouldReturnError(mixed $invalidInteger)
+    public function testExecute_whenLimitIsInvalid_shouldReturnError(
+        mixed $invalid_integer,
+        mixed $error_message_identifier
+    )
     {
         $command_tester = new CommandTester($this->command);
 
         $exitCode = $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            '--limit' => $invalidInteger,
+            '--limit' => $invalid_integer,
         ]);
 
         $this->assertEquals(1, $exitCode);
-        $this->assertEquals("The limit `{$invalidInteger}` must be an integer.", trim($command_tester->getDisplay()));
+        $this->assertEquals("The limit {$error_message_identifier} must be an integer.", trim($command_tester->getDisplay()));
     }
 
     /**
      * @dataProvider invalidInteger
      */
-    public function testExecute_whenChunkSizeIsInvalid_shouldReturnError(mixed $invalidInteger)
+    public function testExecute_whenChunkSizeIsInvalid_shouldReturnError(
+        mixed $invalid_integer,
+        mixed $error_message_identifier
+    )
     {
         $command_tester = new CommandTester($this->command);
 
         $exitCode = $command_tester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            '--chunk-size' => $invalidInteger,
+            '--chunk-size' => $invalid_integer,
         ]);
 
         $this->assertEquals(1, $exitCode);
         $this->assertEquals(
-            "The chunk size `{$invalidInteger}` must be an integer.", trim($command_tester->getDisplay())
+            "The chunk size {$error_message_identifier} must be an integer.", trim($command_tester->getDisplay())
         );
     }
 
@@ -424,8 +433,8 @@ class LocalCommandTest extends KernelTestCase
     public static function invalidInteger(): array
     {
         return [
-            ['a string'],
-            [0.1],
+            ['a string', '"a string"'],
+            [0.1, 0.1],
         ];
     }
 }
