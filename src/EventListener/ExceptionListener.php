@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 class ExceptionListener
 {
     /**
+     * @todo The formatters here may benefit from being moved to different classes or methods. Do it?
+     *
      * @param ExceptionEvent $event
      *
      * @return void

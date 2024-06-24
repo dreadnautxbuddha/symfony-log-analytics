@@ -33,12 +33,12 @@ class LogEntryDtoImporter
             $log_entry = new Entity\LogEntry();
 
             $log_entry
-                ->setServiceName($log_entry_dto->getServiceName())
-                ->setLoggedAt($log_entry_dto->getLoggedAt())
-                ->setHttpRequestMethod($log_entry_dto->getHttpRequestMethod())
-                ->setHttpRequestTarget($log_entry_dto->getHttpRequestTarget())
-                ->setHttpVersion($log_entry_dto->getHttpVersion())
-                ->setHttpStatusCode($log_entry_dto->getHttpStatusCode());
+                ->setServiceName($log_entry_dto->serviceName)
+                ->setLoggedAt($log_entry_dto->loggedAt)
+                ->setHttpRequestMethod($log_entry_dto->httpRequestMethod)
+                ->setHttpRequestTarget($log_entry_dto->httpRequestTarget)
+                ->setHttpVersion($log_entry_dto->httpVersion)
+                ->setHttpStatusCode($log_entry_dto->httpStatusCode);
 
             $this->entityManager->persist($log_entry);
         }

@@ -3,9 +3,7 @@
 namespace App\Controller\LogEntries;
 
 use App\Controller\Support\Contracts\InvokableControllerInterface;
-use App\Entity\LogEntry;
 use App\Repository\LogEntryRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

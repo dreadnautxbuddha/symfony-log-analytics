@@ -34,16 +34,27 @@ class LogEntry implements EntityInterface
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $http_status_code = null;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getServiceName(): ?string
     {
         return $this->service_name;
     }
 
+    /**
+     * @param string $service_name
+     *
+     * @return $this
+     */
     public function setServiceName(string $service_name): static
     {
         $this->service_name = $service_name;
@@ -51,11 +62,19 @@ class LogEntry implements EntityInterface
         return $this;
     }
 
+    /**
+     * @return \DateTimeImmutable|null
+     */
     public function getLoggedAt(): ?\DateTimeImmutable
     {
         return $this->logged_at;
     }
 
+    /**
+     * @param \DateTimeImmutable $logged_at
+     *
+     * @return $this
+     */
     public function setLoggedAt(\DateTimeImmutable $logged_at): static
     {
         $this->logged_at = $logged_at;
@@ -63,11 +82,19 @@ class LogEntry implements EntityInterface
         return $this;
     }
 
+    /**
+     * @return \App\Enum\Http\RequestMethod|null
+     */
     public function getHttpRequestMethod(): ?RequestMethod
     {
         return $this->http_request_method;
     }
 
+    /**
+     * @param \App\Enum\Http\RequestMethod $http_request_method
+     *
+     * @return $this
+     */
     public function setHttpRequestMethod(RequestMethod $http_request_method): static
     {
         $this->http_request_method = $http_request_method;
@@ -75,11 +102,19 @@ class LogEntry implements EntityInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getHttpRequestTarget(): ?string
     {
         return $this->http_request_target;
     }
 
+    /**
+     * @param string $http_request_target
+     *
+     * @return $this
+     */
     public function setHttpRequestTarget(string $http_request_target): static
     {
         $this->http_request_target = $http_request_target;
@@ -87,11 +122,19 @@ class LogEntry implements EntityInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getHttpVersion(): ?string
     {
         return $this->http_version;
     }
 
+    /**
+     * @param string $http_version
+     *
+     * @return $this
+     */
     public function setHttpVersion(string $http_version): static
     {
         $this->http_version = $http_version;
@@ -99,11 +142,19 @@ class LogEntry implements EntityInterface
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getHttpStatusCode(): ?int
     {
         return $this->http_status_code;
     }
 
+    /**
+     * @param int $http_status_code
+     *
+     * @return $this
+     */
     public function setHttpStatusCode(int $http_status_code): static
     {
         $this->http_status_code = $http_status_code;
