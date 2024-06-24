@@ -3,7 +3,6 @@
 namespace App\Service\LogFileImporter;
 
 use App\Dto\Entity\LogEntry\Assembler\FromString;
-use App\Util\File\SplFileObjectIterator;
 use App\Util\File\Support\Contracts;
 
 use function array_filter;
@@ -14,21 +13,14 @@ use function array_map;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class LogFileImporter
+class LogFileImporter implements Support\Contracts\LogFileImporterInterface
 {
     public function __construct(protected LogEntryDtoImporter $logEntryDtoImporter)
     {
     }
 
     /**
-     * Imports the log entries from the iterable file object.
-     *
-     * @param SplFileObjectIterator $iterator
-     * @param int                   $offset
-     * @param int                   $chunk_size
-     * @param int|null              $limit
-     *
-     * @return void
+     * @inheritDoc
      */
     public function import(
         Contracts\ChunkableIterator & Contracts\PaginableIterator $iterator,

@@ -2,7 +2,7 @@
 
 namespace App\Command\Import\Log;
 
-use App\Service\LogFileImporter\LogFileImporter;
+use App\Service\LogFileImporter\Support\Contracts\LogFileImporterInterface;
 use App\Util\File\SplFileObjectIterator;
 use SplFileObject;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -32,9 +32,9 @@ use const FILTER_VALIDATE_INT;
 class LocalCommand extends Command
 {
     public function __construct(
-        protected ValidatorInterface $validator,
-        protected LogFileImporter $logFileImporter,
-        ?string $name = null
+        protected ValidatorInterface       $validator,
+        protected LogFileImporterInterface $logFileImporter,
+        ?string                            $name = null
     ) {
         parent::__construct($name);
     }
@@ -95,9 +95,10 @@ class LocalCommand extends Command
             return $this->fail($output, "The limit `{$limit}` must be an integer.");
         }
 
+        $file = new SplFileObject($path);
         $this
             ->logFileImporter
-            ->import(new SplFileObjectIterator(new SplFileObject($path)), $offset, $chunkSize, $limit);
+            ->import(new SplFileObjectIterator($file), $offset, $chunkSize, $limit);
 
         return Command::SUCCESS;
     }

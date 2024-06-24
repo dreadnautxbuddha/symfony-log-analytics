@@ -12,6 +12,6 @@ use App\Entity\Support\Contracts\Entity;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-interface EntityDto
+interface EntityDtoInterface
 {
 }

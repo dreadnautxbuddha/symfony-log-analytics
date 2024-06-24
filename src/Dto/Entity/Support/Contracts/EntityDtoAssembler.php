@@ -12,10 +12,10 @@ namespace App\Dto\Entity\Support\Contracts;
 interface EntityDtoAssembler
 {
     /**
-     * Creates an {@see EntityDto} object out of the data supplied to the assembler. If one cannot be made, due to,
-     * let's say data constraint errors, `null` will be returned.
+     * Creates an {@see EntityDtoInterface} object out of the data supplied to the assembler. If one cannot be made, due
+     * to, let's say data constraint errors, `null` will be returned.
      *
-     * @return EntityDto|null
+     * @return EntityDtoInterface|null
      */
-    public function assemble(): ?EntityDto;
+    public function assemble(): ?EntityDtoInterface;
 }

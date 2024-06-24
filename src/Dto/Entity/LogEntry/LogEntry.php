@@ -2,7 +2,7 @@
 
 namespace App\Dto\Entity\LogEntry;
 
-use App\Dto\Entity\Support\Contracts\EntityDto;
+use App\Dto\Entity\Support\Contracts\EntityDtoInterface;
 use App\Enum\Http\RequestMethod;
 
 /**
@@ -12,7 +12,7 @@ use App\Enum\Http\RequestMethod;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-readonly class LogEntry implements EntityDto
+readonly class LogEntry implements EntityDtoInterface
 {
     /**
      * @param int|null                $id

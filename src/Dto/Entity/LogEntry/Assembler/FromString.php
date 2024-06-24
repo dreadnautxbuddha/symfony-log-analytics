@@ -3,7 +3,7 @@
 namespace App\Dto\Entity\LogEntry\Assembler;
 
 use App\Dto\Entity\LogEntry\LogEntry;
-use App\Dto\Entity\Support\Contracts\EntityDto;
+use App\Dto\Entity\Support\Contracts\EntityDtoInterface;
 use App\Dto\Entity\Support\Contracts\EntityDtoAssembler;
 use App\Enum\Http\RequestMethod;
 use DateTimeImmutable;
@@ -45,7 +45,7 @@ class FromString implements EntityDtoAssembler
     /**
      * @inheritDoc
      */
-    public function assemble(): ?EntityDto
+    public function assemble(): ?EntityDtoInterface
     {
         $segments = array_values(array_filter(preg_split(self::PATTERN, $this->input, -1, PREG_SPLIT_DELIM_CAPTURE)));
 
