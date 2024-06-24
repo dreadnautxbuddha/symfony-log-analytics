@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Command\Import\Log;
+namespace App\Tests\Functional\Command\Import\Log;
 
 use App\Entity\LogEntry;
 use App\Enum\Http\RequestMethod;

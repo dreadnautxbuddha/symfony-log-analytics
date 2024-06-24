@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Unit\Dto\Entity\LogEntry;
+namespace App\Tests\Unit\Dto\Entity\LogEntry;
 
 use App\Dto\Entity\LogEntry\Assembler\FromString;
 use PHPUnit\Framework\TestCase;

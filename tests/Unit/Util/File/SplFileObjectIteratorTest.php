@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Util\File;
+namespace App\Tests\Unit\Util\File;
 
 use PHPUnit\Framework\TestCase;
 use App\Util\File\SplFileObjectIterator;

@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Functional\Service\LogImporter;
+namespace App\Tests\Functional\Service\LogFileImporter;
 
 use App\Dto\Entity\LogEntry\Assembler\FromString;
 use App\Entity\LogEntry;
