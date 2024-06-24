@@ -2,12 +2,13 @@
 
 namespace App\Util\File;
 
+use App\Util\File\Support\Contracts;
 use Closure;
 use RecursiveIterator;
-use SeekableIterator;
 use SplFileObject;
 
 use function call_user_func;
+use function is_null;
 
 /**
  * An iterator that's primarily focused on an {@see SplFileObject} and adds the ability to chunk results when iterating
@@ -17,7 +18,7 @@ use function call_user_func;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
+class SplFileObjectIterator implements Contracts\ChunkableIterator, Contracts\PaginableIterator
 {
     /**
      * The number of rows to chunk the file into when iterating via {@see SplFileObject::each()}
@@ -59,38 +60,21 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     }
 
     /**
-     * Instruct the iterator to supply n number of lines to the loop (be it a while loop or a foreach) that's called
-     * when iterating through the {@see SplFileObject}.
-     *
-     * Note: Beware of overriding the callback with either one that moves the inner cursor to the next, or having one
-     * that DOES NOT move the cursor at all because this might have unexpected results. By default,
-     * {@see SplFileObject::fgets()} moves the cursor to the next once run.
-     *
-     * @param int|null     $size
-     * @param Closure|null $callback
-     *
-     * @return void
+     * @inheritDoc
      */
     public function chunk(?int $size = null, ?Closure $callback = null): void
     {
         $this->chunkSize = $size;
 
-        if ($callback !== null) {
-            $this->getChunkItemDataCallback = $callback;
+        if (is_null($callback)) {
+            return;
         }
+
+        $this->getChunkItemDataCallback = $callback;
     }
 
     /**
-     * When chunking iteration results, each item in it will be run through this callback, giving you the ability to
-     * choose which information about the current line you want to get. By default, the callback used will just return
-     * the value of {@see SplFileObject::fgets()}.
-     *
-     * This callback, when run, should ALWAYS move the pointer to the next item in {@see SplFileObjectIterator::$file}
-     * to ensure that we are always getting the right line.
-     *
-     * @param SplFileObject $file
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getChunkItemData(SplFileObject $file): string
     {
@@ -98,11 +82,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     }
 
     /**
-     * Limits the number of lines to be yielded.
-     *
-     * @param int|null $limit
-     *
-     * @return void
+     * @inheritDoc
      */
     public function limit(?int $limit): void
     {

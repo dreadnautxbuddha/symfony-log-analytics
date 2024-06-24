@@ -4,6 +4,7 @@ namespace App\Service\LogFileImporter;
 
 use App\Dto\Entity\LogEntry\Assembler\FromString;
 use App\Util\File\SplFileObjectIterator;
+use App\Util\File\Support\Contracts;
 
 use function array_filter;
 use function array_map;
@@ -29,7 +30,12 @@ class LogFileImporter
      *
      * @return void
      */
-    public function import(SplFileObjectIterator $iterator, int $offset, int $chunk_size, ?int $limit = null): void
+    public function import(
+        Contracts\ChunkableIterator & Contracts\PaginableIterator $iterator,
+        int $offset,
+        int $chunk_size,
+        ?int $limit = null
+    ): void
     {
         $iterator->seek($offset);
         $iterator->limit($limit);
