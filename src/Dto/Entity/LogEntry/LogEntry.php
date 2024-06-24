@@ -4,6 +4,7 @@ namespace App\Dto\Entity\LogEntry;
 
 use App\Dto\Entity\Support\Contracts\EntityDtoInterface;
 use App\Enum\Http\RequestMethod;
+use DateTimeImmutable;
 
 /**
  * A data transfer object that can be converted directly into a {@see \App\Entity\LogEntry} entity.
@@ -17,7 +18,7 @@ readonly class LogEntry implements EntityDtoInterface
     /**
      * @param int|null                $id
      * @param string|null             $serviceName
-     * @param \DateTimeImmutable|null $loggedAt
+     * @param DateTimeImmutable|null $loggedAt
      * @param RequestMethod|null      $httpRequestMethod
      * @param string|null             $httpRequestTarget
      * @param string|null             $httpVersion
@@ -26,7 +27,7 @@ readonly class LogEntry implements EntityDtoInterface
     public function __construct(
         private ?int $id = null,
         private ?string $serviceName = null,
-        private ?\DateTimeImmutable $loggedAt = null,
+        private ?DateTimeImmutable $loggedAt = null,
         private ?RequestMethod $httpRequestMethod = null,
         private ?string $httpRequestTarget = null,
         private ?string $httpVersion = null,

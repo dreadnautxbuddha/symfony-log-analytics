@@ -42,7 +42,7 @@ class LogEntryDtoImporterTest extends KernelTestCase
         $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:21:54 +0000'), $log_entry->getLoggedAt());
         $this->assertEquals(RequestMethod::POST, $log_entry->getHttpRequestMethod());
         $this->assertEquals('/users', $log_entry->getHttpRequestTarget());
-        $this->assertEquals('1.1', $log_entry->getHttpProtocolVersion());
+        $this->assertEquals('1.1', $log_entry->getHttpVersion());
         $this->assertEquals('400', $log_entry->getHttpStatusCode());
     }
 }

@@ -294,7 +294,7 @@ class LocalCommandTest extends KernelTestCase
             );
             $this->assertEquals(
                 $this->logEntriesInLogFile[$index]['http_version'],
-                $log_entry->getHttpProtocolVersion()
+                $log_entry->getHttpVersion()
             );
             $this->assertEquals(
                 $this->logEntriesInLogFile[$index]['http_status_code'],
@@ -321,7 +321,7 @@ class LocalCommandTest extends KernelTestCase
         $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:22:58 +0000'), $log_entry->getLoggedAt());
         $this->assertEquals(RequestMethod::from('POST'), $log_entry->getHttpRequestMethod());
         $this->assertEquals('/invoices', $log_entry->getHttpRequestTarget());
-        $this->assertEquals('1.1', $log_entry->getHttpProtocolVersion());
+        $this->assertEquals('1.1', $log_entry->getHttpVersion());
         $this->assertEquals(201, $log_entry->getHttpStatusCode());
     }
 
@@ -405,19 +405,19 @@ class LocalCommandTest extends KernelTestCase
         $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:21:53 +0000'), $first->getLoggedAt());
         $this->assertEquals(RequestMethod::POST, $first->getHttpRequestMethod());
         $this->assertEquals('/users', $first->getHttpRequestTarget());
-        $this->assertEquals(1.1, $first->getHttpProtocolVersion());
+        $this->assertEquals(1.1, $first->getHttpVersion());
         $this->assertEquals(201, $first->getHttpStatusCode());
         $this->assertEquals('USER-SERVICE', $second->getServiceName());
         $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:29:13 +0000'), $second->getLoggedAt());
         $this->assertEquals(RequestMethod::POST, $second->getHttpRequestMethod());
         $this->assertEquals('/users', $second->getHttpRequestTarget());
-        $this->assertEquals(1.1, $second->getHttpProtocolVersion());
+        $this->assertEquals(1.1, $second->getHttpVersion());
         $this->assertEquals(201, $second->getHttpStatusCode());
         $this->assertEquals('USER-SERVICE', $third->getServiceName());
         $this->assertEquals(new DateTimeImmutable('18/Aug/2018:09:30:54 +0000'), $third->getLoggedAt());
         $this->assertEquals(RequestMethod::POST, $third->getHttpRequestMethod());
         $this->assertEquals('/users', $third->getHttpRequestTarget());
-        $this->assertEquals(1.1, $third->getHttpProtocolVersion());
+        $this->assertEquals(1.1, $third->getHttpVersion());
         $this->assertEquals(400, $third->getHttpStatusCode());
     }
 

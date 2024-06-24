@@ -29,7 +29,7 @@ class LogEntry implements Entity
     private ?string $http_request_target = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 2, scale: 1)]
-    private ?string $http_protocol_version = null;
+    private ?string $http_version = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $http_status_code = null;
@@ -87,14 +87,14 @@ class LogEntry implements Entity
         return $this;
     }
 
-    public function getHttpProtocolVersion(): ?string
+    public function getHttpVersion(): ?string
     {
-        return $this->http_protocol_version;
+        return $this->http_version;
     }
 
-    public function setHttpProtocolVersion(string $http_protocol_version): static
+    public function setHttpVersion(string $http_version): static
     {
-        $this->http_protocol_version = $http_protocol_version;
+        $this->http_version = $http_version;
 
         return $this;
     }
