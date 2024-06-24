@@ -20,21 +20,14 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/logs', name: 'log_entries.delete', methods: ['DELETE'])]
 class TruncateController implements InvokableControllerInterface
 {
-    protected LogEntryRepository $repository;
-
-    public function __construct(protected EntityManagerInterface $entityManager)
-    {
-        $this->repository = $this->entityManager->getRepository(LogEntry::class);
-    }
-
     /**
-     * @todo Move SQL query to repository for reusability
+     * @param LogEntryRepository $repository
      *
      * @return JsonResponse
      */
-    public function __invoke(): JsonResponse
+    public function __invoke(LogEntryRepository $repository): JsonResponse
     {
-        $this->repository->createQueryBuilder('log_entry')->delete()->getQuery()->execute();
+        $repository->truncate();
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }

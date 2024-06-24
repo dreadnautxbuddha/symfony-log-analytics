@@ -20,6 +20,16 @@ class LogEntryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Deletes all log entries from the database.
+     *
+     * @return void
+     */
+    public function truncate(): void
+    {
+        $this->createQueryBuilder('logEntry')->delete()->getQuery()->execute();
+    }
+
+    /**
      * Returns the total number of log entries whose {@see LogEntry::$service_name} and
      * {@see LogEntry::$http_status_code} matches the supplied one, whose {@see LogEntry::$logged_at} is greater than or
      * equal to the start date, less than or equal to the end date, or in between.
