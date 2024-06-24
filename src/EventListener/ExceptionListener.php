@@ -29,12 +29,12 @@ class ExceptionListener
             /** @var ValidationFailedException $validation_failed_exception */
             $validation_failed_exception = $exception->getPrevious();
 
-            $formattedErrors = [];
+            $formatted_errors = [];
             foreach ($validation_failed_exception->getViolations() as $error) {
-                $formattedErrors[$error->getPropertyPath()][] = $error->getMessage();
+                $formatted_errors[$error->getPropertyPath()][] = $error->getMessage();
             }
 
-            $response = new JsonResponse(['errors' => $formattedErrors], $exception->getStatusCode());
+            $response = new JsonResponse(['errors' => $formatted_errors], $exception->getStatusCode());
 
             $event->setResponse($response);
         }
