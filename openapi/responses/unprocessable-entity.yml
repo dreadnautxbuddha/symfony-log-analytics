@@ -1,0 +1,10 @@
+type: object
+properties:
+  errors:
+    type: object
+    description: An array of error messages identified by the field name as keys
+    additionalProperties:
+      type: array
+      items:
+        type: string
+        example: An error message about the prop

@@ -1,0 +1,17 @@
+type: object
+properties:
+  service_name:
+    description: The name of the service that logged the request
+    type: string
+    maxLength: 32
+    example: 'INVOICE SERVICE'
+  logged_at:
+    type: string
+    format: date-time
+    description: When the timestamp on the log entry
+    example: '2018-08-17 09:21:56'
+  http_status_code:
+    type: number
+    minimum: 100
+    maximum: 599
+    example: 200

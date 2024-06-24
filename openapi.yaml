@@ -1,82 +1,77 @@
----
 openapi: 3.0.0
+
 info:
   title: Log analytics API
   description: Log stream analysis API
   contact:
-    email: marko.schilde@legal.one
+    email: innov.petercortez@gmail.com
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
+
 servers:
-- url: https://virtserver.swaggerhub.com/Legal-One/BECodingTest/1.0.0
-  description: SwaggerHub API Auto Mocking
+  - url: 'https://virtserver.swaggerhub.com/Legal-One/BECodingTest/1.0.0'
+    description: SwaggerHub API Auto Mocking
+
 tags:
-- name: analytics
-  description: Analytics functions
+  - name: analytics
+    description: Analytics functions
+
 paths:
-  /count:
+  /logs/count:
     get:
       tags:
-      - analytics
-      summary: searches logs and provides aggregated count of matches
-      description: |
-        Count all matching items in the logs.
-      operationId: searchLogs
+        - analytics
+      description: Searches log entries and provides aggregated count of matches
       parameters:
-      - name: serviceNames
-        in: query
-        description: array of service names
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: startDate
-        in: query
-        description: start date
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: dateTime
-      - name: endDate
-        in: query
-        description: end date
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: dateTime
-      - name: statusCode
-        in: query
-        description: filter on request status code
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
+        - name: serviceNames
+          in: query
+          description: Array of service names
+          schema:
+            type: array
+            items:
+              $ref: "./openapi/fields/log_entry.yml#/properties/service_name"
+        - name: startDate
+          in: query
+          description: start date
+          schema:
+            $ref: "./openapi/fields/log_entry.yml#/properties/logged_at"
+        - name: endDate
+          in: query
+          description: end date
+          schema:
+            $ref: "./openapi/fields/log_entry.yml#/properties/logged_at"
+        - name: statusCode
+          in: query
+          description: filter on request status code
+          schema:
+            $ref: "./openapi/fields/log_entry.yml#/properties/http_status_code"
       responses:
-        "200":
+        '200':
           description: count of matching results
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CountItem'
-        "400":
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        example: 100
+        '422':
           description: bad input parameter
-components:
-  schemas:
-    CountItem:
-      required:
-      - counter
-      type: object
-      properties:
-        counter:
-          minimum: 0
-          type: integer
+          content:
+            application/json:
+              schema:
+                $ref: "./openapi/responses/unprocessable-entity.yml"
+  /logs:
+    delete:
+      tags:
+        - analytics
+      description: Delete all log entries in the database
+      responses:
+        '204':
+          $ref: "./openapi/responses/no-content.yml"
