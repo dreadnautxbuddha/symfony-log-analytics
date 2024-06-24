@@ -15,15 +15,15 @@ use SplFileObject;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-interface ChunkableIterator extends RecursiveIterator, SeekableIterator
+interface ChunkableIteratorInterface extends RecursiveIterator, SeekableIterator
 {
     /**
      * Instruct the iterator to supply n number of lines to the loop (be it a while loop or a foreach) that's called
      * when iterating through the {@see SplFileObject}.
      *
-     * Note: Beware of overriding the {@see ChunkableIterator::getChunkItemData() callback} with either one that moves
-     * the inner cursor to the next, or having one that DOES NOT move the cursor at all because this might have
-     * unexpected results.
+     * Note: Beware of overriding the {@see ChunkableIteratorInterface::getChunkItemData() callback} with either one
+     * that moves the inner cursor to the next, or having one that DOES NOT move the cursor at all because this might
+     * have unexpected results.
      *
      * @param int|null     $size
      * @param Closure|null $callback

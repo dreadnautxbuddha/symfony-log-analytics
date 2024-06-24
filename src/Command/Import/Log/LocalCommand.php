@@ -4,7 +4,7 @@ namespace App\Command\Import\Log;
 
 use App\CommandInput\Import\Log\LocalCommandInput;
 use App\Service\LogFileImporter\Support\Contracts\LogFileImporterInterface;
-use App\Util\File\SplFileObjectIterator;
+use App\Util\File\SplFileObjectIteratorInterface;
 use SplFileObject;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -87,7 +87,7 @@ class LocalCommand extends Command
 
         $this
             ->logFileImporter
-            ->import(new SplFileObjectIterator(new SplFileObject($path)), $offset, $chunk_size, $limit);
+            ->import(new SplFileObjectIteratorInterface(new SplFileObject($path)), $offset, $chunk_size, $limit);
 
         return Command::SUCCESS;
     }

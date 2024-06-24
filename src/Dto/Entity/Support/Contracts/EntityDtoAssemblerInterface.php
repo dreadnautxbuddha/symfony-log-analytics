@@ -9,7 +9,7 @@ namespace App\Dto\Entity\Support\Contracts;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-interface EntityDtoAssembler
+interface EntityDtoAssemblerInterface
 {
     /**
      * Creates an {@see EntityDtoInterface} object out of the data supplied to the assembler. If one cannot be made, due

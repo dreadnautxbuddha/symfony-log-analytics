@@ -13,7 +13,7 @@ use SeekableIterator;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-interface PaginableIterator extends RecursiveIterator, SeekableIterator
+interface PaginableIteratorInterface extends RecursiveIterator, SeekableIterator
 {
     /**
      * Limits the number of lines to be yielded.

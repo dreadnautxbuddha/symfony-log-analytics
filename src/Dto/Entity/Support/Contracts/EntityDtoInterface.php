@@ -2,11 +2,11 @@
 
 namespace App\Dto\Entity\Support\Contracts;
 
-use App\Entity\Support\Contracts\Entity;
+use App\Entity\Support\Contracts\EntityInterface;
 
 /**
- * Represents an object that serves as a proxy for an {@see Entity}, containing its information, and can be passed
- * around different layers of the system, giving us a single point of access.
+ * Represents an object that serves as a proxy for an {@see EntityInterface}, containing its information, and can be
+ * passed around different layers of the system, giving us a single point of access.
  *
  * @package App\Dto\Entity\Support\Contracts
  *

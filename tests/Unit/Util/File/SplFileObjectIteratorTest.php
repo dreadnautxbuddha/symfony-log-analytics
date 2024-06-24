@@ -3,7 +3,7 @@
 namespace App\Tests\Unit\Util\File;
 
 use PHPUnit\Framework\TestCase;
-use App\Util\File\SplFileObjectIterator;
+use App\Util\File\SplFileObjectIteratorInterface;
 use SplFileObject;
 
 use function array_map;
@@ -14,7 +14,7 @@ class SplFileObjectIteratorTest extends TestCase
     public function testIteration_whenChunkSizeIsSet_shouldChunkLines()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
         $iterable->chunk(2);
 
         foreach ($iterable as $lines) {
@@ -76,7 +76,7 @@ class SplFileObjectIteratorTest extends TestCase
     public function testIteration_whenChunkSizeIsNotSet_shouldChunkLines()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
 
         foreach ($iterable as $line) {
             $chunks[] = trim($line->fgets());
@@ -114,7 +114,7 @@ class SplFileObjectIteratorTest extends TestCase
     public function testIteration_whenOffsetIsSupplied_shouldOnlyReadFromThatLine()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
         $iterable->seek(19);
 
         while ($iterable->valid()) {
@@ -134,7 +134,7 @@ class SplFileObjectIteratorTest extends TestCase
     public function testIteration_whenLimitIsSupplied_shouldOnlyReadUntilThatLine()
     {
         $lines = [];
-        $iterable = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
         $iterable->limit(2);
 
         while ($iterable->valid()) {
@@ -153,7 +153,7 @@ class SplFileObjectIteratorTest extends TestCase
     public function testIteration_whenLimitAndOffsetIsSupplied_shouldReturnCorrectRows()
     {
         $lines = [];
-        $iterable = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
         $iterable->seek(17);
         $iterable->limit(2);
 
@@ -173,7 +173,7 @@ class SplFileObjectIteratorTest extends TestCase
     public function testIteration_whenLimitOffsetAndChunkIsSupplied_shouldReturnCorrectRows()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIterator(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
         $iterable->seek(5);
         $iterable->chunk(3);
         $iterable->limit(6);

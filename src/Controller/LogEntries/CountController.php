@@ -31,7 +31,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  *
  * <code>
  *     {
- *         "count": 1150
+ *         "data": {
+ *             "count": 1150
+ *         }
  *     }
  * </code>
  *

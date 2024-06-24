@@ -9,6 +9,6 @@ namespace App\Entity\Support\Contracts;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-interface Entity
+interface EntityInterface
 {
 }

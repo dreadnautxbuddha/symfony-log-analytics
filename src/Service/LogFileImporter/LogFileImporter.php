@@ -22,7 +22,7 @@ class LogFileImporter implements Support\Contracts\LogFileImporterInterface
      * @inheritDoc
      */
     public function import(
-        Contracts\ChunkableIterator & Contracts\PaginableIterator $iterator,
+        Contracts\ChunkableIteratorInterface & Contracts\PaginableIteratorInterface $iterator,
         int $offset,
         int $chunk_size,
         ?int $limit = null

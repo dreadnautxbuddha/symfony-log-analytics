@@ -4,7 +4,7 @@ namespace App\Dto\Entity\LogEntry\Assembler;
 
 use App\Dto\Entity\LogEntry\LogEntry;
 use App\Dto\Entity\Support\Contracts\EntityDtoInterface;
-use App\Dto\Entity\Support\Contracts\EntityDtoAssembler;
+use App\Dto\Entity\Support\Contracts\EntityDtoAssemblerInterface;
 use App\Enum\Http\RequestMethod;
 use DateTimeImmutable;
 use Exception;
@@ -20,7 +20,7 @@ use const PREG_SPLIT_DELIM_CAPTURE;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class FromString implements EntityDtoAssembler
+class FromString implements EntityDtoAssemblerInterface
 {
     /**
      * The pattern we're using to ensure that an input looks somewhat like this:

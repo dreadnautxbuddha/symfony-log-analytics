@@ -18,7 +18,7 @@ use function is_null;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class SplFileObjectIterator implements Contracts\ChunkableIterator, Contracts\PaginableIterator
+class SplFileObjectIteratorInterface implements Contracts\ChunkableIteratorInterface, Contracts\PaginableIteratorInterface
 {
     /**
      * The number of rows to chunk the file into when iterating via {@see SplFileObject::each()}
@@ -48,8 +48,8 @@ class SplFileObjectIterator implements Contracts\ChunkableIterator, Contracts\Pa
      * choose which information about the current line you want to get. By default, the callback used will just return
      * the value of {@see SplFileObject::fgets()}.
      *
-     * This callback, when run, should ALWAYS move the pointer to the next item in {@see SplFileObjectIterator::$file}
-     * to ensure that we are always getting the right line.
+     * This callback, when run, should ALWAYS move the pointer to the next item in
+     * {@see SplFileObjectIteratorInterface::$file} to ensure that we are always getting the right line.
      *
      * @var Closure
      */
