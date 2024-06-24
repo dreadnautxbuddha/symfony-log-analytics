@@ -11,8 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use function file_exists;
 use function filter_var;
@@ -31,11 +29,8 @@ use const FILTER_VALIDATE_INT;
 )]
 class LocalCommand extends Command
 {
-    public function __construct(
-        protected ValidatorInterface       $validator,
-        protected LogFileImporterInterface $logFileImporter,
-        ?string                            $name = null
-    ) {
+    public function __construct(protected LogFileImporterInterface $logFileImporter, ?string $name = null)
+    {
         parent::__construct($name);
     }
 

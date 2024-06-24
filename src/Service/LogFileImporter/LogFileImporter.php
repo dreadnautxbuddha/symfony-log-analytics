@@ -4,9 +4,7 @@ namespace App\Service\LogFileImporter;
 
 use App\Dto\Entity\LogEntry\Assembler\FromString;
 use App\Util\File\Support\Contracts;
-
-use function array_filter;
-use function array_map;
+use Psr\Log\LoggerInterface;
 
 /**
  * @package App\Service\LogFileImporter
@@ -15,7 +13,7 @@ use function array_map;
  */
 class LogFileImporter implements Support\Contracts\LogFileImporterInterface
 {
-    public function __construct(protected LogEntryDtoImporter $logEntryDtoImporter)
+    public function __construct(protected LogEntryDtoImporter $logEntryDtoImporter, protected LoggerInterface $logger)
     {
     }
 
@@ -36,9 +34,21 @@ class LogFileImporter implements Support\Contracts\LogFileImporterInterface
         $iterator->chunk($chunk_size);
 
         while ($iterator->valid()) {
-            $lines = array_filter(
-                array_map(fn (string $line) => (new FromString($line))->assemble(), $iterator->current())
-            );
+            $lines = [];
+
+            foreach ($iterator->current() as $line) {
+                $assembler = new FromString($line);
+                $log_entry_dto = $assembler->assemble();
+
+                // Entity DTOs that cannot be assembled means that the supplied data to it is not enough to create one. Thus, we can skip it.
+                if (empty($log_entry_dto)) {
+                    $this->logger->warning('Skipping log entry with mismatched format', ['line' => $line]);
+
+                    continue;
+                }
+
+                $lines[] = $log_entry_dto;
+            }
 
             if (empty($lines)) {
                 continue;

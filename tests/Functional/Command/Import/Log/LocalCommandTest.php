@@ -8,6 +8,8 @@ use App\Repository\LogEntryRepository;
 use App\Service\LogFileImporter\LogEntryDtoImporter;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Command\Command;
@@ -272,9 +274,7 @@ class LocalCommandTest extends KernelTestCase
     {
         $command_tester = new CommandTester($this->command);
 
-        $command_tester->execute([
-            'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-        ]);
+        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/logs.log']);
         $log_entries = $this->repository->findAll();
 
         $this->assertCount(20, $log_entries);
@@ -351,6 +351,59 @@ class LocalCommandTest extends KernelTestCase
         $log_entries = $this->repository->findAll();
 
         $this->assertCount(20, $log_entries);
+    }
+
+    public function testExecute_whenLogEntryDoesNotMatchExpectedFormat_shouldBeLogged()
+    {
+        $monolog = $this->createMock(Logger::class);
+        $command_tester = new CommandTester($this->command);
+        $monolog
+            ->expects($this->exactly(28))
+            ->method('warning')
+            ->with('Skipping log entry with mismatched format');
+
+        $this->getContainer()->set(LoggerInterface::class, $monolog);
+
+        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/bad.log']);
+    }
+
+    public function testExecute_whenLogEntryDoesNotMatchExpectedFormat_shouldNotSaveLogEntriesToDatabase()
+    {
+        $command_tester = new CommandTester($this->command);
+
+        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/bad.log']);
+        $log_entries = $this->repository->findAll();
+
+        $this->assertEmpty($log_entries);
+    }
+
+    public function testExecute_whenLogEntryContainsBothGoodAndBadEntries_shouldOnlySaveGoodLogEntriesToDatabase()
+    {
+        $command_tester = new CommandTester($this->command);
+
+        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/mixed.log']);
+        $log_entries = $this->repository->findAll();
+        [$first, $second, $third] = $log_entries;
+
+        $this->assertCount(3, $log_entries);
+        $this->assertEquals('USER-SERVICE', $first->getServiceName());
+        $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:21:53 +0000'), $first->getLoggedAt());
+        $this->assertEquals(RequestMethod::POST, $first->getHttpRequestMethod());
+        $this->assertEquals('/users', $first->getHttpRequestTarget());
+        $this->assertEquals(1.1, $first->getHttpProtocolVersion());
+        $this->assertEquals(201, $first->getHttpStatusCode());
+        $this->assertEquals('USER-SERVICE', $second->getServiceName());
+        $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:29:13 +0000'), $second->getLoggedAt());
+        $this->assertEquals(RequestMethod::POST, $second->getHttpRequestMethod());
+        $this->assertEquals('/users', $second->getHttpRequestTarget());
+        $this->assertEquals(1.1, $second->getHttpProtocolVersion());
+        $this->assertEquals(201, $second->getHttpStatusCode());
+        $this->assertEquals('USER-SERVICE', $third->getServiceName());
+        $this->assertEquals(new DateTimeImmutable('18/Aug/2018:09:30:54 +0000'), $third->getLoggedAt());
+        $this->assertEquals(RequestMethod::POST, $third->getHttpRequestMethod());
+        $this->assertEquals('/users', $third->getHttpRequestTarget());
+        $this->assertEquals(1.1, $third->getHttpProtocolVersion());
+        $this->assertEquals(400, $third->getHttpStatusCode());
     }
 
     public static function invalidInteger(): array
