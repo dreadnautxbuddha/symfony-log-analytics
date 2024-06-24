@@ -32,16 +32,18 @@ class LogEntryDtoImporter
         foreach ($log_entry_dtos as $log_entry_dto) {
             $log_entry = new Entity\LogEntry();
 
-            $log_entry->setServiceName($log_entry_dto->getServiceName());
-            $log_entry->setLoggedAt($log_entry_dto->getLoggedAt());
-            $log_entry->setHttpRequestMethod($log_entry_dto->getHttpRequestMethod());
-            $log_entry->setHttpRequestTarget($log_entry_dto->getHttpRequestTarget());
-            $log_entry->setHttpProtocolVersion($log_entry_dto->getHttpVersion());
-            $log_entry->setHttpStatusCode($log_entry_dto->getHttpStatusCode());
+            $log_entry
+                ->setServiceName($log_entry_dto->getServiceName())
+                ->setLoggedAt($log_entry_dto->getLoggedAt())
+                ->setHttpRequestMethod($log_entry_dto->getHttpRequestMethod())
+                ->setHttpRequestTarget($log_entry_dto->getHttpRequestTarget())
+                ->setHttpProtocolVersion($log_entry_dto->getHttpVersion())
+                ->setHttpStatusCode($log_entry_dto->getHttpStatusCode());
 
             $this->entityManager->persist($log_entry);
         }
 
         $this->entityManager->flush();
+        $this->entityManager->clear();
     }
 }

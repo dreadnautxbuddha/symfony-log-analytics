@@ -340,6 +340,21 @@ class LocalCommandTest extends KernelTestCase
         ]);
     }
 
+    public function testExecute_whenChunkSizeIsSupplied_shouldClearNTimes()
+    {
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->expects($this->exactly(10))->method('clear');
+
+        $logEntryDtoImporter = new LogEntryDtoImporter($entityManager);
+        $this->getContainer()->set(LogEntryDtoImporter::class, $logEntryDtoImporter);
+        $command_tester = new CommandTester($this->command);
+
+        $command_tester->execute([
+            'path' => 'tests/Data/Service/LogFileImporter/logs.log',
+            '--chunk-size' => 2,
+        ]);
+    }
+
     public function testExecute_whenChunkSizeIsSupplied_shouldSaveAllLogEntriesToDatabase()
     {
         $command_tester = new CommandTester($this->command);
