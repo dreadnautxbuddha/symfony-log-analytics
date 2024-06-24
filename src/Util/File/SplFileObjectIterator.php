@@ -43,29 +43,24 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     protected ?int $limit = null;
 
     /**
+     * When chunking iteration results, each item in it will be run through this callback, giving you the ability to
+     * choose which information about the current line you want to get. By default, the callback used will just return
+     * the value of {@see SplFileObject::fgets()}.
+     *
+     * This callback, when run, should ALWAYS move the pointer to the next item in {@see SplFileObjectIterator::$file}
+     * to ensure that we are always getting the right line.
+     *
      * @var Closure
      */
-    protected Closure $chunkCallback;
+    protected Closure $getChunkItemDataCallback;
 
     public function __construct(protected readonly SplFileObject $file)
     {
     }
 
     /**
-     * Returns the underlying {@see SplFileObject} object, useful when iterating through it with while loop
-     *
-     * @return SplFileObject
-     */
-    public function getFile(): SplFileObject
-    {
-        return $this->file;
-    }
-
-    /**
      * Instruct the iterator to supply n number of lines to the loop (be it a while loop or a foreach) that's called
-     * when iterating through the {@see SplFileObject}. Each item in the chunk will then be run through the callback,
-     * giving you the ability to choose which information about the current line you want to get. By default, the
-     * callback used will just return the value of {@see SplFileObject::fgets()}.
+     * when iterating through the {@see SplFileObject}.
      *
      * Note: Beware of overriding the callback with either one that moves the inner cursor to the next, or having one
      * that DOES NOT move the cursor at all because this might have unexpected results. By default,
@@ -79,7 +74,27 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     public function chunk(?int $size = null, ?Closure $callback = null): void
     {
         $this->chunkSize = $size;
-        $this->chunkCallback = $callback ?? fn (SplFileObject $file) => $file->fgets();
+
+        if ($callback !== null) {
+            $this->getChunkItemDataCallback = $callback;
+        }
+    }
+
+    /**
+     * When chunking iteration results, each item in it will be run through this callback, giving you the ability to
+     * choose which information about the current line you want to get. By default, the callback used will just return
+     * the value of {@see SplFileObject::fgets()}.
+     *
+     * This callback, when run, should ALWAYS move the pointer to the next item in {@see SplFileObjectIterator::$file}
+     * to ensure that we are always getting the right line.
+     *
+     * @param SplFileObject $file
+     *
+     * @return string
+     */
+    public function getChunkItemData(SplFileObject $file): string
+    {
+        return $file->fgets();
     }
 
     /**
@@ -97,22 +112,23 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     /**
      * {@inheritDoc}
      *
-     * When chunking, the returned value will be an array of lines.
+     * When chunking, the returned value will be a generator whose data will contain
+     * {@see self::$getChunkItemDataCallback information about the chunk}.
      *
      * @todo Test performance when the chunk size reaches upwards of thousands since we are passing this object n times.
      */
     public function current(): string|array|false|SplFileObject
     {
         if ($this->chunkSize === null) {
-            return $this->getFile();
+            return $this->file;
         }
 
         $chunk = [];
         $activeChunkSize = 0;
         // Since this iterator is stateful, we can always rely on the valid() method to check if the pointer is still
-        // valid after running getFile() which may or may not always move the cursor.
+        // valid after running the chunk item data callback which may or may not always move the cursor.
         while ($this->valid() && $activeChunkSize < $this->chunkSize) {
-            $chunk[] = call_user_func($this->chunkCallback, $this->getFile());
+            $chunk[] = call_user_func($this->getChunkItemDataCallback ?? [$this, 'getChunkItemData'], $this->file);
 
             // We can completely omit this in favor of just counting the $chunk array, but for performance purposes, we
             // are going to stick with the good 'ol indices.
@@ -127,7 +143,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function next(): void
     {
-        $this->getFile()->next();
+        $this->file->next();
     }
 
     /**
@@ -135,7 +151,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function key(): int
     {
-        return $this->getFile()->key();
+        return $this->file->key();
     }
 
     /**
@@ -146,7 +162,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function valid(): bool
     {
-        return ! $this->hasReachedLineLimit() && $this->getFile()->valid();
+        return ! $this->hasReachedLineLimit() && $this->file->valid();
     }
 
     /**
@@ -154,7 +170,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function rewind(): void
     {
-        $this->getFile()->rewind();
+        $this->file->rewind();
     }
 
     /**
@@ -164,7 +180,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
     {
         $this->offset = $offset;
 
-        $this->getFile()->seek($offset);
+        $this->file->seek($offset);
     }
 
     /**
@@ -172,7 +188,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function hasChildren(): bool
     {
-        return $this->getFile()->hasChildren();
+        return $this->file->hasChildren();
     }
 
     /**
@@ -180,7 +196,7 @@ class SplFileObjectIterator implements RecursiveIterator, SeekableIterator
      */
     public function getChildren(): ?RecursiveIterator
     {
-        return $this->getFile()->getChildren();
+        return $this->file->getChildren();
     }
 
     /**
