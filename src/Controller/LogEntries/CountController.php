@@ -67,6 +67,11 @@ class CountController implements InvokableControllerInterface
     {
         $query = $this->repository->createQueryBuilder('log_entry')->select('count(log_entry.id) as count');
 
+        if (! empty($request->serviceNames)) {
+            $query
+                ->where('log_entry.service_name IN (:service_names)')
+                ->setParameter('service_names', $request->serviceNames);
+        }
         if ($request->statusCode) {
             $query
                 ->where('log_entry.http_status_code = :status_code')

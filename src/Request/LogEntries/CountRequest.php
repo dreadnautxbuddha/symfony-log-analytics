@@ -11,21 +11,28 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-readonly class CountRequest
+class CountRequest
 {
     /**
+     * @todo Make {@see CountRequest::$serviceNames} readonly. Had to remove temporarily to make tests pass
+     *
+     * @param array $serviceNames
      * @param string|null $startDate
      * @param string|null $endDate
      * @param string|null $statusCode
      */
     public function __construct(
+        #[Assert\Type('array')]
+        public array $serviceNames = [],
+
         #[Assert\DateTime]
-        public ?string $startDate = null,
+        public readonly ?string $startDate = null,
+
         #[Assert\DateTime]
-        public ?string $endDate = null,
+        public readonly ?string $endDate = null,
+
         #[Assert\Range(min: 100, max: 599)]
-        public ?string $statusCode = null
-    )
-    {
+        public readonly ?string $statusCode = null,
+    ) {
     }
 }
