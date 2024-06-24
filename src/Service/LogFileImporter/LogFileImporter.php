@@ -29,32 +29,36 @@ class LogFileImporter implements Support\Contracts\LogFileImporterInterface
     {
         $iterator->seek($offset);
         $iterator->limit($limit);
-        // Because we are chunking the lines that are being read from the file, each iteration using a loop will yield
-        // an array of lines, instead of a string comprising a single line.
         $iterator->chunk($chunk_size);
 
         while ($iterator->valid()) {
-            $lines = [];
+            $importable_log_entry_dtos = [];
 
+            // Because we are chunking the lines that are being read from the file, each iteration using a loop will
+            // yield an array of lines, instead of a string comprising a single line.
             foreach ($iterator->current() as $line) {
                 $assembler = new FromString($line);
                 $log_entry_dto = $assembler->assemble();
 
-                // Entity DTOs that cannot be assembled means that the supplied data to it is not enough to create one. Thus, we can skip it.
+                // Entity DTOs that cannot be assembled means that the supplied data to it is not enough to create one.
+                // Thus, we can skip it.
                 if (empty($log_entry_dto)) {
+                    // TODO: Update the test here to add an assertion on the line number that's being skipped.
                     $this->logger->warning('Skipping log entry with mismatched format', ['line' => $line]);
 
                     continue;
                 }
 
-                $lines[] = $log_entry_dto;
+                $importable_log_entry_dtos[] = $log_entry_dto;
             }
 
-            if (empty($lines)) {
+            if (empty($importable_log_entry_dtos)) {
+                // Sadly, there are no importable log entry DTOs in this chunk -- most likely because they do not match
+                // the pattern we are expecting.
                 continue;
             }
 
-            $this->logEntryDtoImporter->import($lines);
+            $this->logEntryDtoImporter->import($importable_log_entry_dtos);
         }
     }
 }

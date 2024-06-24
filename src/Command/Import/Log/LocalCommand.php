@@ -72,7 +72,7 @@ class LocalCommand extends Command
         $path = $input->getArgument('path');
         $offset = $input->getOption('offset');
         $limit = $input->getOption('limit');
-        $chunkSize = $input->getOption('chunk-size');
+        $chunk_size = $input->getOption('chunk-size');
 
         if (! file_exists($path)) {
             return $this->fail($output, "The file at the specified path `{$path}` could not be found.");
@@ -82,18 +82,17 @@ class LocalCommand extends Command
             return $this->fail($output, "The offset `{$offset}` must be an integer.");
         }
 
-        if ($input->hasOption('chunk-size') && filter_var($chunkSize, FILTER_VALIDATE_INT) === false) {
-            return $this->fail($output, "The chunk size `{$chunkSize}` must be an integer.");
+        if ($input->hasOption('chunk-size') && filter_var($chunk_size, FILTER_VALIDATE_INT) === false) {
+            return $this->fail($output, "The chunk size `{$chunk_size}` must be an integer.");
         }
 
         if ($input->hasOption('limit') && $limit !== null && filter_var($limit, FILTER_VALIDATE_INT) === false) {
             return $this->fail($output, "The limit `{$limit}` must be an integer.");
         }
 
-        $file = new SplFileObject($path);
         $this
             ->logFileImporter
-            ->import(new SplFileObjectIterator($file), $offset, $chunkSize, $limit);
+            ->import(new SplFileObjectIterator(new SplFileObject($path)), $offset, $chunk_size, $limit);
 
         return Command::SUCCESS;
     }

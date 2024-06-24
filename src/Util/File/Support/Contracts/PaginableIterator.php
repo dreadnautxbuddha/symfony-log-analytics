@@ -2,11 +2,17 @@
 
 namespace App\Util\File\Support\Contracts;
 
-use Closure;
 use RecursiveIterator;
 use SeekableIterator;
-use SplFileObject;
 
+/**
+ * Represents a paginable iterator. Since the {@see SeekableIterator} interface already allows the specification of an
+ * {@see SeekableIterator::seek() offset} before iterating this one just focuses on limiting the results.
+ *
+ * @package App\Util\File\Support\Contracts
+ *
+ * @author  Peter Cortez <innov.petercortez@gmail.com>
+ */
 interface PaginableIterator extends RecursiveIterator, SeekableIterator
 {
     /**

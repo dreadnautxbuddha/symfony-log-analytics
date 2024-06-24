@@ -104,15 +104,15 @@ class SplFileObjectIterator implements Contracts\ChunkableIterator, Contracts\Pa
         }
 
         $chunk = [];
-        $activeChunkSize = 0;
+        $active_chunk_size = 0;
         // Since this iterator is stateful, we can always rely on the valid() method to check if the pointer is still
         // valid after running the chunk item data callback which may or may not always move the cursor.
-        while ($this->valid() && $activeChunkSize < $this->chunkSize) {
+        while ($this->valid() && $active_chunk_size < $this->chunkSize) {
             $chunk[] = call_user_func($this->getChunkItemDataCallback ?? [$this, 'getChunkItemData'], $this->file);
 
             // We can completely omit this in favor of just counting the $chunk array, but for performance purposes, we
             // are going to stick with the good 'ol indices.
-            $activeChunkSize++;
+            $active_chunk_size++;
         }
 
         return $chunk;
