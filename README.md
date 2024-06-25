@@ -29,7 +29,7 @@ This project uses [Docker Compose](https://docs.docker.com/compose/) for develop
 
 ```shell
 docker compose --env-file ./.env.local build
-docker compose up -d
+docker compose --env-file ./.env.local up -d
 ``` 
 
 ### Install dependencies
