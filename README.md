@@ -18,9 +18,6 @@ then in your `.env.local` file, supply the following environment variables:
 2. `POSTGRES_PASSWORD` 
 3. `POSTGRES_DB` 
 4. `SERVER_NAME` 
-5. `HTTP_PORT` 
-6. `HTTPS_PORT` 
-7. `HTTP3_PORT`
 
 After that, you can proceed with the next steps. 
 
@@ -73,4 +70,6 @@ php bin/phpunit
 ```
 
 # Usage
+The page can be accessed at the `SERVER_NAME` environment variable you supplied in your `.env.local` file.
+
 Find out more about how this command is used [here](./docs/index.md).
