@@ -434,7 +434,7 @@ class LocalCommandTest extends KernelTestCase
     {
         return [
             ['a string', '"a string"'],
-            [0.1, 0.1],
+            [0.1, '"0.1"'],
         ];
     }
 }

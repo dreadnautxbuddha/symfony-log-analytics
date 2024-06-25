@@ -21,13 +21,13 @@ readonly class LocalCommandInput
         #[Assert\File(null, null, null, null, null, 'The file at the specified path could not be found.')]
         public ?string $path = null,
 
-        #[Assert\Type('int', 'The offset {{ value }} must be an integer.')]
+        #[Assert\Regex("/^\d*$/", 'The offset {{ value }} must be an integer.')]
         public string|int|float|null $offset = null,
 
-        #[Assert\Type('int', 'The limit {{ value }} must be an integer.')]
+        #[Assert\Regex("/^\d*$/", 'The limit {{ value }} must be an integer.')]
         public string|int|float|null $limit = null,
 
-        #[Assert\Type('int', 'The chunk size {{ value }} must be an integer.')]
+        #[Assert\Regex("/^\d*$/", 'The chunk size {{ value }} must be an integer.')]
         public string|int|float|null $chunkSize = null,
     )
     {
