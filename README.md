@@ -14,10 +14,10 @@ cp .env .env.local
 
 then in your `.env.local` file, supply the following environment variables:
 
-1. `POSTGRES_USER`
-2. `POSTGRES_PASSWORD` 
-3. `POSTGRES_DB` 
-4. `SERVER_NAME` 
+1. `POSTGRES_USER` _example: `myusername`_
+2. `POSTGRES_PASSWORD` _example: `mypassword`_
+3. `POSTGRES_DB` _example: `mydatabase`_
+4. `SERVER_NAME` _example: `analytics.legal-one.localhost`_
 
 After that, you can proceed with the next steps. 
 
