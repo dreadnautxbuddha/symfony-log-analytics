@@ -82,6 +82,13 @@ and fix any errors automatically by running:
 vendor/bin/phpcbf
 ```
 
+# Static Code Analysis
+We have installed [PHPStan](https://phpstan.org/) to help with our code reviews! Simply run this command in order to check for bugs earlier in the code review pipeline:
+
+```shell
+vendor/bin/phpstan
+```
+
 # Usage
 The page can be accessed at the `SERVER_NAME` environment variable you supplied in your `.env.local` file.
 
