@@ -2,6 +2,7 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Tests\Functional\Command\Import\Log;
 
+use Dreadnaut\LogAnalyticsBundle\Entity\Assembler\LogEntry\FromLogEntryDto;
 use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
 use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use Dreadnaut\LogAnalyticsBundle\Repository\LogEntryRepository;
@@ -339,7 +340,7 @@ class LocalCommandTest extends KernelTestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager->expects($this->exactly(10))->method('flush');
 
-        $logEntryDtoImporter = new LogEntryDtoImporter($entityManager);
+        $logEntryDtoImporter = new LogEntryDtoImporter($entityManager, new FromLogEntryDto());
         $this->getContainer()->set(LogEntryDtoImporter::class, $logEntryDtoImporter);
         $command_tester = new CommandTester($this->command);
 
@@ -354,7 +355,7 @@ class LocalCommandTest extends KernelTestCase
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager->expects($this->exactly(10))->method('clear');
 
-        $logEntryDtoImporter = new LogEntryDtoImporter($entityManager);
+        $logEntryDtoImporter = new LogEntryDtoImporter($entityManager, new FromLogEntryDto());
         $this->getContainer()->set(LogEntryDtoImporter::class, $logEntryDtoImporter);
         $command_tester = new CommandTester($this->command);
 

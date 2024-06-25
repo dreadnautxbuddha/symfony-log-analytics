@@ -6,6 +6,8 @@ use Dreadnaut\LogAnalyticsBundle\Entity;
 use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\LogEntry as LogEntryDto;
 use Doctrine\ORM\EntityManagerInterface;
 
+use function is_null;
+
 /**
  * Responsible for importing {@see LogEntryDto} objects as {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry} objects
  *
@@ -15,7 +17,10 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class LogEntryDtoImporter
 {
-    public function __construct(protected EntityManagerInterface $entityManager)
+    public function __construct(
+        protected EntityManagerInterface $entityManager,
+        protected Entity\Assembler\Support\Contracts\EntityAssemblerInterface $assembler
+    )
     {
     }
 
@@ -31,15 +36,11 @@ class LogEntryDtoImporter
     public function import(array $log_entry_dtos): void
     {
         foreach ($log_entry_dtos as $log_entry_dto) {
-            $log_entry = new Entity\LogEntry();
+            $log_entry = $this->assembler->assemble($log_entry_dto);
 
-            $log_entry
-                ->setServiceName($log_entry_dto->serviceName)
-                ->setLoggedAt($log_entry_dto->loggedAt)
-                ->setHttpRequestMethod($log_entry_dto->httpRequestMethod)
-                ->setHttpRequestTarget($log_entry_dto->httpRequestTarget)
-                ->setHttpVersion($log_entry_dto->httpVersion)
-                ->setHttpStatusCode($log_entry_dto->httpStatusCode);
+            if (is_null($log_entry)) {
+                continue;
+            }
 
             $this->entityManager->persist($log_entry);
         }
