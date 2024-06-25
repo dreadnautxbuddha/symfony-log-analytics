@@ -1,0 +1,3 @@
+services:
+    entitydto.log_entry.assembler.from_string:
+        class: 'Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler\FromString'

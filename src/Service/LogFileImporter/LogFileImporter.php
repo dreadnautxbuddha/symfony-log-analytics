@@ -2,7 +2,7 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter;
 
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoAssemblerInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoAssemblerInterface;
 use Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 use Psr\Log\LoggerInterface;
 use SplFileObject;

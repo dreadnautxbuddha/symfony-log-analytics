@@ -1,10 +1,10 @@
 <?php
 
-namespace Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\Assembler;
+namespace Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler;
 
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\LogEntry;
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoInterface;
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoAssemblerInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoAssemblerInterface;
 use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use DateTimeImmutable;
 use Exception;

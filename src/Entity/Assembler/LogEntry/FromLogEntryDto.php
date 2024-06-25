@@ -3,7 +3,7 @@
 namespace Dreadnaut\LogAnalyticsBundle\Entity\Assembler\LogEntry;
 
 use Dreadnaut\LogAnalyticsBundle\Entity;
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 use Dreadnaut\LogAnalyticsBundle\Entity\Assembler\Support\Contracts\EntityAssemblerInterface;
 use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityInterface;
 

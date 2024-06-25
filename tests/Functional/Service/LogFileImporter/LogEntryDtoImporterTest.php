@@ -2,7 +2,7 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Tests\Functional\Service\LogFileImporter;
 
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\Assembler\FromString;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler\FromString;
 use Dreadnaut\LogAnalyticsBundle\Entity\Assembler\LogEntry\FromLogEntryDto;
 use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
 use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;

@@ -2,7 +2,7 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Tests\Unit\Dto\Entity\LogEntry;
 
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\Assembler\FromString;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler\FromString;
 use PHPUnit\Framework\TestCase;
 
 class FromStringTest extends TestCase

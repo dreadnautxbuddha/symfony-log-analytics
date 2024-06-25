@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
+imports:
+    - { resource: 'entity-dto.yaml' }
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -28,3 +31,7 @@ services:
     # please note that last definitions always *replace* previous ones
     Dreadnaut\LogAnalyticsBundle\EventListener\ExceptionListener:
         tags: [kernel.event_listener]
+
+    Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\LogFileImporter:
+        arguments:
+            $assembler: '@entitydto.log_entry.assembler.from_string'

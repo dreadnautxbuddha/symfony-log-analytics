@@ -1,8 +1,8 @@
 <?php
 
-namespace Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry;
+namespace Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry;
 
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use DateTimeImmutable;
 
@@ -10,7 +10,7 @@ use DateTimeImmutable;
  * A data transfer object that can be converted directly into a {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry}
  * entity.
  *
- * @package Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry
+ * @package Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
