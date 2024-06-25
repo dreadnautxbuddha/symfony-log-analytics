@@ -25,10 +25,10 @@ then in your `.env.local` file, supply the following environment variables:
 After that, you can proceed with the next steps. 
 
 ### Docker Compose
-This project uses [Docker Compose](https://docs.docker.com/compose/) for development. Simply clone the project, and run the following:
+This project uses [Docker Compose](https://docs.docker.com/compose/) for development, and can be started up by simply running the following:
 
 ```shell
-docker compose build
+docker compose --env-file ./.env.local build
 docker compose up -d
 ``` 
 
@@ -38,17 +38,25 @@ Once the containers are up and running, you can now install the dependencies by 
 docker compose exec -it php /bin/bash
 ```
 
-and installing the Composer packages:
+and installing the [Composer](https://getcomposer.org/) packages:
 
 ```shell
 composer install
 ```
 
-### Database migrations
-once you have installed the Composer packages, you can start running the migrations:
+### Database
+#### Create the test database
+Once you have installed the [Composer](https://getcomposer.org/) packages, you can start creating the test database for the unit tests to work.
+```shell
+php bin/console doctrine:database:create --env=test
+```
+> 💡️ Since our compose file already created our local database for us, we won't have to run this command for it.
+
+Then, we can start running the migrations
 
 ```shell
 php bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate --env=test
 ```
 
 # Unit Tests
