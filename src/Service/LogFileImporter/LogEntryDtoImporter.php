@@ -5,8 +5,8 @@ namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter;
 use Doctrine\ORM\EntityManagerInterface;
 use Dreadnaut\LogAnalyticsBundle\Entity;
 use Dreadnaut\LogAnalyticsBundle\EntityDto;
-
 use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
+
 use function is_null;
 
 /**

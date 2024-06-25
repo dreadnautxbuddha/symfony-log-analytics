@@ -18,5 +18,11 @@
 
     <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
     <rule ref="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
+    <rule ref="Generic.Files.LineLength">
+      <properties>
+       <property name="lineLimit" value="120"/>
+       <property name="absoluteLineLimit" value="0"/>
+      </properties>
+     </rule>
 
 </ruleset>
