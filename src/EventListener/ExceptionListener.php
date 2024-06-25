@@ -28,15 +28,15 @@ class ExceptionListener
         $exception = $event->getThrowable();
 
         if ($exception instanceof UnprocessableEntityHttpException) {
-            /** @var ValidationFailedException $validation_failed_exception */
-            $validation_failed_exception = $exception->getPrevious();
+            /** @var ValidationFailedException $validationFailedException */
+            $validationFailedException = $exception->getPrevious();
 
-            $formatted_errors = [];
-            foreach ($validation_failed_exception->getViolations() as $error) {
-                $formatted_errors[$error->getPropertyPath()][] = $error->getMessage();
+            $formattedErrors = [];
+            foreach ($validationFailedException->getViolations() as $error) {
+                $formattedErrors[$error->getPropertyPath()][] = $error->getMessage();
             }
 
-            $response = new JsonResponse(['errors' => $formatted_errors], $exception->getStatusCode());
+            $response = new JsonResponse(['errors' => $formattedErrors], $exception->getStatusCode());
 
             $event->setResponse($response);
         }

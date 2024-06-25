@@ -12,7 +12,7 @@ interface LogFileImporterInterface
      *
      * @param SplFileObjectIteratorInterface $iterator
      * @param int                            $offset
-     * @param int                            $chunk_size
+     * @param int                            $chunkSize
      * @param int|null                       $limit
      *
      * @return void
@@ -20,7 +20,7 @@ interface LogFileImporterInterface
     public function import(
         Contracts\ChunkableIteratorInterface & Contracts\PaginableIteratorInterface $iterator,
         int $offset,
-        int $chunk_size,
+        int $chunkSize,
         ?int $limit = null
     ): void;
 }

@@ -216,8 +216,7 @@ class LocalCommandTest extends KernelTestCase
     public function testExecute_whenOffsetIsInvalid_shouldReturnError(
         mixed $invalid_integer,
         mixed $error_message_identifier
-    )
-    {
+    ) {
         $command_tester = new CommandTester($this->command);
 
         $exitCode = $command_tester->execute([
@@ -235,8 +234,7 @@ class LocalCommandTest extends KernelTestCase
     public function testExecute_whenLimitIsInvalid_shouldReturnError(
         mixed $invalid_integer,
         mixed $error_message_identifier
-    )
-    {
+    ) {
         $command_tester = new CommandTester($this->command);
 
         $exitCode = $command_tester->execute([
@@ -254,8 +252,7 @@ class LocalCommandTest extends KernelTestCase
     public function testExecute_whenChunkSizeIsInvalid_shouldReturnError(
         mixed $invalid_integer,
         mixed $error_message_identifier
-    )
-    {
+    ) {
         $command_tester = new CommandTester($this->command);
 
         $exitCode = $command_tester->execute([
@@ -265,7 +262,8 @@ class LocalCommandTest extends KernelTestCase
 
         $this->assertEquals(1, $exitCode);
         $this->assertEquals(
-            "The chunk size {$error_message_identifier} must be an integer.", trim($command_tester->getDisplay())
+            "The chunk size {$error_message_identifier} must be an integer.",
+            trim($command_tester->getDisplay())
         );
     }
 

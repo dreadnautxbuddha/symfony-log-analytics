@@ -31,8 +31,7 @@ class LocalCommand extends Command
         protected LogFileImporterInterface $logFileImporter,
         protected ValidatorInterface $validator,
         ?string $name = null
-    )
-    {
+    ) {
         parent::__construct($name);
     }
 
@@ -74,8 +73,8 @@ class LocalCommand extends Command
         $path = $input->getArgument('path');
         $offset = $input->getOption('offset');
         $limit = $input->getOption('limit');
-        $chunk_size = $input->getOption('chunk-size');
-        $errors = $this->validator->validate(new Cli($path, $offset, $limit, $chunk_size));
+        $chunkSize = $input->getOption('chunk-size');
+        $errors = $this->validator->validate(new Cli($path, $offset, $limit, $chunkSize));
 
         if (count($errors) > 0) {
             foreach ($errors as $error) {
@@ -87,7 +86,7 @@ class LocalCommand extends Command
 
         $this
             ->logFileImporter
-            ->import(new SplFileObjectIteratorInterface(new SplFileObject($path)), $offset, $chunk_size, $limit);
+            ->import(new SplFileObjectIteratorInterface(new SplFileObject($path)), $offset, $chunkSize, $limit);
 
         return Command::SUCCESS;
     }

@@ -25,13 +25,10 @@ class CountRequest
     public function __construct(
         #[Assert\Type('array')]
         public array $serviceNames = [],
-
         #[Assert\DateTime]
         public readonly ?string $startDate = null,
-
         #[Assert\DateTime]
         public readonly ?string $endDate = null,
-
         #[Assert\Range(min: 100, max: 599)]
         public ?int $statusCode = null,
     ) {

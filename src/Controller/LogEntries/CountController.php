@@ -57,8 +57,7 @@ class CountController implements InvokableControllerInterface
         LogEntryRepository $repository,
         #[MapQueryString(validationFailedStatusCode: Response::HTTP_UNPROCESSABLE_ENTITY)]
         CountRequest $request = new CountRequest(),
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $count = $repository->countBy(
             $request->serviceNames,
             $request->statusCode,

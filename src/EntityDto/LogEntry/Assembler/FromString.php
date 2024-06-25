@@ -13,6 +13,7 @@ use function array_filter;
 use function array_values;
 use function count;
 use function preg_split;
+
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
@@ -36,7 +37,8 @@ class FromString implements EntityDtoAssemblerInterface
      * 5. HTTP version
      * 6. HTTP status code
      */
-    const string PATTERN = '/^([A-Z]+-SERVICE) - - \[(\d{2}\/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\] "(GET|POST|PUT|DELETE|PATCH) (\/[\w\/]*) HTTP\/(\d\.\d)" ([1-5]\d{2})$/';
+    // phpcs:ignore
+    public const string PATTERN = '/^([A-Z]+-SERVICE) - - \[(\d{2}\/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\] "(GET|POST|PUT|DELETE|PATCH) (\/[\w\/]*) HTTP\/(\d\.\d)" ([1-5]\d{2})$/';
 
     /**
      * @inheritDoc
@@ -50,12 +52,12 @@ class FromString implements EntityDtoAssemblerInterface
         }
 
         [
-            $service_name,
-            $logged_at,
-            $http_request_method,
-            $http_request_target,
-            $http_version,
-            $http_status_code
+            $serviceName,
+            $loggedAt,
+            $httpRequestMethod,
+            $httpRequestTarget,
+            $httpVersion,
+            $httpStatusCode
         ] = $segments;
 
         try {
@@ -65,12 +67,12 @@ class FromString implements EntityDtoAssemblerInterface
             // in this method returning `null`
             return new LogEntry(
                 null,
-                $service_name,
-                new DateTimeImmutable($logged_at),
-                RequestMethod::from($http_request_method),
-                $http_request_target,
-                $http_version,
-                $http_status_code
+                $serviceName,
+                new DateTimeImmutable($loggedAt),
+                RequestMethod::from($httpRequestMethod),
+                $httpRequestTarget,
+                $httpVersion,
+                $httpStatusCode
             );
         } catch (Exception) {
         }

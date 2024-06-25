@@ -18,8 +18,7 @@ class LogFileImporter implements Support\Contracts\LogFileImporterInterface
         protected LogEntryDtoImporter $logEntryDtoImporter,
         protected LoggerInterface $logger,
         protected EntityDtoAssemblerInterface $assembler
-    )
-    {
+    ) {
     }
 
     /**
@@ -28,46 +27,45 @@ class LogFileImporter implements Support\Contracts\LogFileImporterInterface
     public function import(
         Contracts\ChunkableIteratorInterface & Contracts\PaginableIteratorInterface $iterator,
         int $offset,
-        int $chunk_size,
+        int $chunkSize,
         ?int $limit = null
-    ): void
-    {
+    ): void {
         $iterator->seek($offset);
         $iterator->limit($limit);
-        $iterator->chunk($chunk_size, fn (SplFileObject $file) => [$file->key() + 1, $file->fgets()]);
+        $iterator->chunk($chunkSize, fn (SplFileObject $file) => [$file->key() + 1, $file->fgets()]);
 
         while ($iterator->valid()) {
-            $importable_log_entry_dtos = [];
+            $importableLogEntryDtos = [];
 
             // Because we are chunking the lines that are being read from the file, each iteration using a loop will
             // yield an array of lines, instead of a string comprising a single line.
-            foreach ($iterator->current() as [$line_number, $line]) {
-                $log_entry_dto = $this->assembler->assemble($line);
+            foreach ($iterator->current() as [$lineNumber, $line]) {
+                $logEntryDto = $this->assembler->assemble($line);
 
                 // Entity DTOs that cannot be assembled means that the supplied data to it is not enough to create one.
                 // Thus, we can skip it.
-                if (empty($log_entry_dto)) {
+                if (empty($logEntryDto)) {
                     // TODO: Update the test here to add an assertion on the line number that's being skipped.
                     $this
                         ->logger
                         ->warning('Skipping log entry with mismatched format', [
-                            'line' => $line_number,
+                            'line' => $lineNumber,
                             'content' => $line,
                         ]);
 
                     continue;
                 }
 
-                $importable_log_entry_dtos[] = $log_entry_dto;
+                $importableLogEntryDtos[] = $logEntryDto;
             }
 
-            if (empty($importable_log_entry_dtos)) {
+            if (empty($importableLogEntryDtos)) {
                 // Sadly, there are no importable log entry DTOs in this chunk -- most likely because they do not match
                 // the pattern we are expecting.
                 continue;
             }
 
-            $this->logEntryDtoImporter->import($importable_log_entry_dtos);
+            $this->logEntryDtoImporter->import($importableLogEntryDtos);
         }
     }
 }

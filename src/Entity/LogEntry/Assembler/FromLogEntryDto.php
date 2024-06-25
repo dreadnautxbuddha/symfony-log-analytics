@@ -21,9 +21,9 @@ class FromLogEntryDto implements EntityAssemblerInterface
      */
     public function assemble(EntityDtoInterface $entityDto): ?EntityInterface
     {
-        $log_entry = new Entity\LogEntry\LogEntry();
+        $logEntry = new Entity\LogEntry\LogEntry();
 
-        $log_entry
+        $logEntry
             ->setServiceName($entityDto->serviceName)
             ->setLoggedAt($entityDto->loggedAt)
             ->setHttpRequestMethod($entityDto->httpRequestMethod)
@@ -31,6 +31,6 @@ class FromLogEntryDto implements EntityAssemblerInterface
             ->setHttpVersion($entityDto->httpVersion)
             ->setHttpStatusCode($entityDto->httpStatusCode);
 
-        return $log_entry;
+        return $logEntry;
     }
 }

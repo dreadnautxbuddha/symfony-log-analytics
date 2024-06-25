@@ -18,7 +18,9 @@ use function is_null;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class SplFileObjectIteratorInterface implements Contracts\ChunkableIteratorInterface, Contracts\PaginableIteratorInterface
+class SplFileObjectIteratorInterface implements
+    Contracts\ChunkableIteratorInterface,
+    Contracts\PaginableIteratorInterface
 {
     /**
      * The number of rows to chunk the file into when iterating via {@see SplFileObject::each()}
@@ -104,15 +106,15 @@ class SplFileObjectIteratorInterface implements Contracts\ChunkableIteratorInter
         }
 
         $chunk = [];
-        $active_chunk_size = 0;
+        $activeChunkSize = 0;
         // Since this iterator is stateful, we can always rely on the valid() method to check if the pointer is still
         // valid after running the chunk item data callback which may or may not always move the cursor.
-        while ($this->valid() && $active_chunk_size < $this->chunkSize) {
+        while ($this->valid() && $activeChunkSize < $this->chunkSize) {
             $chunk[] = call_user_func($this->getChunkItemDataCallback ?? [$this, 'getChunkItemData'], $this->file);
 
             // We can completely omit this in favor of just counting the $chunk array, but for performance purposes, we
             // are going to stick with the good 'ol indices.
-            $active_chunk_size++;
+            $activeChunkSize++;
         }
 
         return $chunk;
@@ -187,6 +189,5 @@ class SplFileObjectIteratorInterface implements Contracts\ChunkableIteratorInter
     private function hasReachedLineLimit(): bool
     {
         return $this->limit !== null && ($this->key() - $this->offset) >= $this->limit;
-
     }
 }

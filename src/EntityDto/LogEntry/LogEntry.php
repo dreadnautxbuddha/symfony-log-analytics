@@ -34,7 +34,6 @@ readonly class LogEntry implements EntityDtoInterface
         public ?string $httpRequestTarget = null,
         public ?string $httpVersion = null,
         public ?int $httpStatusCode = null,
-    )
-    {
+    ) {
     }
 }

@@ -14,24 +14,31 @@ class LogEntry implements EntityInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    // phpcs:ignore
     private ?int $id = null;
 
     #[ORM\Column(length: 32)]
+    // phpcs:ignore
     private ?string $service_name = null;
 
     #[ORM\Column]
+    // phpcs:ignore
     private ?\DateTimeImmutable $logged_at = null;
 
     #[ORM\Column(enumType: RequestMethod::class)]
+    // phpcs:ignore
     private ?RequestMethod $http_request_method = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    // phpcs:ignore
     private ?string $http_request_target = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 2, scale: 1)]
+    // phpcs:ignore
     private ?string $http_version = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    // phpcs:ignore
     private ?int $http_status_code = null;
 
     /**
@@ -47,17 +54,19 @@ class LogEntry implements EntityInterface
      */
     public function getServiceName(): ?string
     {
+        // phpcs:ignore
         return $this->service_name;
     }
 
     /**
-     * @param string $service_name
+     * @param string $serviceName
      *
      * @return $this
      */
-    public function setServiceName(string $service_name): static
+    public function setServiceName(string $serviceName): static
     {
-        $this->service_name = $service_name;
+        // phpcs:ignore
+        $this->service_name = $serviceName;
 
         return $this;
     }
@@ -67,17 +76,19 @@ class LogEntry implements EntityInterface
      */
     public function getLoggedAt(): ?\DateTimeImmutable
     {
+        // phpcs:ignore
         return $this->logged_at;
     }
 
     /**
-     * @param \DateTimeImmutable $logged_at
+     * @param \DateTimeImmutable $loggedAt
      *
      * @return $this
      */
-    public function setLoggedAt(\DateTimeImmutable $logged_at): static
+    public function setLoggedAt(\DateTimeImmutable $loggedAt): static
     {
-        $this->logged_at = $logged_at;
+        // phpcs:ignore
+        $this->logged_at = $loggedAt;
 
         return $this;
     }
@@ -87,17 +98,19 @@ class LogEntry implements EntityInterface
      */
     public function getHttpRequestMethod(): ?RequestMethod
     {
+        // phpcs:ignore
         return $this->http_request_method;
     }
 
     /**
-     * @param \Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod $http_request_method
+     * @param \Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod $httpRequestMethod
      *
      * @return $this
      */
-    public function setHttpRequestMethod(RequestMethod $http_request_method): static
+    public function setHttpRequestMethod(RequestMethod $httpRequestMethod): static
     {
-        $this->http_request_method = $http_request_method;
+        // phpcs:ignore
+        $this->http_request_method = $httpRequestMethod;
 
         return $this;
     }
@@ -107,17 +120,19 @@ class LogEntry implements EntityInterface
      */
     public function getHttpRequestTarget(): ?string
     {
+        // phpcs:ignore
         return $this->http_request_target;
     }
 
     /**
-     * @param string $http_request_target
+     * @param string $httpRequestTarget
      *
      * @return $this
      */
-    public function setHttpRequestTarget(string $http_request_target): static
+    public function setHttpRequestTarget(string $httpRequestTarget): static
     {
-        $this->http_request_target = $http_request_target;
+        // phpcs:ignore
+        $this->http_request_target = $httpRequestTarget;
 
         return $this;
     }
@@ -127,17 +142,19 @@ class LogEntry implements EntityInterface
      */
     public function getHttpVersion(): ?string
     {
+        // phpcs:ignore
         return $this->http_version;
     }
 
     /**
-     * @param string $http_version
+     * @param string $httpVersion
      *
      * @return $this
      */
-    public function setHttpVersion(string $http_version): static
+    public function setHttpVersion(string $httpVersion): static
     {
-        $this->http_version = $http_version;
+        // phpcs:ignore
+        $this->http_version = $httpVersion;
 
         return $this;
     }
@@ -147,17 +164,19 @@ class LogEntry implements EntityInterface
      */
     public function getHttpStatusCode(): ?int
     {
+        // phpcs:ignore
         return $this->http_status_code;
     }
 
     /**
-     * @param int $http_status_code
+     * @param int $httpStatusCode
      *
      * @return $this
      */
-    public function setHttpStatusCode(int $http_status_code): static
+    public function setHttpStatusCode(int $httpStatusCode): static
     {
-        $this->http_status_code = $http_status_code;
+        // phpcs:ignore
+        $this->http_status_code = $httpStatusCode;
 
         return $this;
     }

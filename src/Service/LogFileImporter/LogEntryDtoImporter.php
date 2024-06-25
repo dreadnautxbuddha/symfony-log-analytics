@@ -21,8 +21,7 @@ class LogEntryDtoImporter
     public function __construct(
         protected EntityManagerInterface $entityManager,
         protected Entity\Support\Contracts\EntityAssemblerInterface $assembler
-    )
-    {
+    ) {
     }
 
     /**
@@ -30,20 +29,20 @@ class LogEntryDtoImporter
      * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry}
      * objects
      *
-     * @param array<EntityDto\LogEntry\LogEntry> $log_entry_dtos
+     * @param array<EntityDto\LogEntry\LogEntry> $logEntryDtos
      *
      * @return void
      */
-    public function import(array $log_entry_dtos): void
+    public function import(array $logEntryDtos): void
     {
-        foreach ($log_entry_dtos as $log_entry_dto) {
-            $log_entry = $this->assembler->assemble($log_entry_dto);
+        foreach ($logEntryDtos as $logEntryDto) {
+            $logEntry = $this->assembler->assemble($logEntryDto);
 
-            if (is_null($log_entry)) {
+            if (is_null($logEntry)) {
                 continue;
             }
 
-            $this->entityManager->persist($log_entry);
+            $this->entityManager->persist($logEntry);
         }
 
         $this->entityManager->flush();

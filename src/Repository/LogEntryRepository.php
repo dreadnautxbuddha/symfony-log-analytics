@@ -34,34 +34,33 @@ class LogEntryRepository extends ServiceEntityRepository
      * {@see LogEntry::$http_status_code} matches the supplied one, whose {@see LogEntry::$logged_at} is greater than or
      * equal to the start date, less than or equal to the end date, or in between.
      *
-     * @param array       $service_names
-     * @param int|null    $status_code
-     * @param string|null $start_date
-     * @param string|null $end_date
+     * @param array       $serviceNames
+     * @param int|null    $statusCode
+     * @param string|null $startDate
+     * @param string|null $endDate
      *
      * @return int
      */
     public function countBy(
-        array $service_names = [],
-        ?int $status_code = null,
-        ?string $start_date = null,
-        ?string $end_date = null,
-    ): int
-    {
+        array $serviceNames = [],
+        ?int $statusCode = null,
+        ?string $startDate = null,
+        ?string $endDate = null,
+    ): int {
         $criteria = new Criteria();
 
-        if (! empty($service_names)) {
-            $criteria->where($criteria->expr()->in('service_name', $service_names));
+        if (! empty($serviceNames)) {
+            $criteria->where($criteria->expr()->in('service_name', $serviceNames));
         }
-        if ($status_code) {
-            $criteria->where($criteria->expr()->eq('http_status_code', $status_code));
+        if ($statusCode) {
+            $criteria->where($criteria->expr()->eq('http_status_code', $statusCode));
         }
         try {
-            if ($start_date) {
-                $criteria->where($criteria->expr()->gte('logged_at', new DateTimeImmutable($start_date)));
+            if ($startDate) {
+                $criteria->where($criteria->expr()->gte('logged_at', new DateTimeImmutable($startDate)));
             }
-            if ($end_date) {
-                $criteria->where($criteria->expr()->lte('logged_at', new DateTimeImmutable($end_date)));
+            if ($endDate) {
+                $criteria->where($criteria->expr()->lte('logged_at', new DateTimeImmutable($endDate)));
             }
         } catch (Exception) {
             // If it so happens that an exception is thrown while we're creating datetimes using the supplied format,
