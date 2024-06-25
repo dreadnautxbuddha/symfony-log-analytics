@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Dto\Entity\LogEntry\Assembler;
+namespace Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\Assembler;
 
-use App\Dto\Entity\LogEntry\LogEntry;
-use App\Dto\Entity\Support\Contracts\EntityDtoInterface;
-use App\Dto\Entity\Support\Contracts\EntityDtoAssemblerInterface;
-use App\Enum\Http\RequestMethod;
+use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoInterface;
+use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoAssemblerInterface;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use DateTimeImmutable;
 use Exception;
 
@@ -16,7 +16,7 @@ use function preg_split;
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
- * @package App\Assembler\DTO\LogEntry
+ * @package Dreadnaut\LogAnalyticsBundle\Assembler\DTO\LogEntry
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

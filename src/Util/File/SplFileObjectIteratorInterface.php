@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Util\File;
+namespace Dreadnaut\LogAnalyticsBundle\Util\File;
 
-use App\Util\File\Support\Contracts;
+use Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 use Closure;
 use RecursiveIterator;
 use SplFileObject;
@@ -14,7 +14,7 @@ use function is_null;
  * An iterator that's primarily focused on an {@see SplFileObject} and adds the ability to chunk results when iterating
  * through its lines.
  *
- * @package App\Util\File
+ * @package Dreadnaut\LogAnalyticsBundle\Util\File
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

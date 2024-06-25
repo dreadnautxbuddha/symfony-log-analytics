@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entity\Support\Contracts;
+namespace Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts;
 
 /**
  * Represents an ORM entity
  *
- * @package App\Entity\Support\Contracts
+ * @package Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

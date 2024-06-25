@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum\Http;
+namespace Dreadnaut\LogAnalyticsBundle\Enum\Http;
 
 enum RequestMethod: string
 {

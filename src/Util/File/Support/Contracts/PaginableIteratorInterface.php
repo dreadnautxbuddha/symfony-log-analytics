@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Util\File\Support\Contracts;
+namespace Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 
 use RecursiveIterator;
 use SeekableIterator;
@@ -9,7 +9,7 @@ use SeekableIterator;
  * Represents a paginable iterator. Since the {@see SeekableIterator} interface already allows the specification of an
  * {@see SeekableIterator::seek() offset} before iterating this one just focuses on limiting the results.
  *
- * @package App\Util\File\Support\Contracts
+ * @package Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

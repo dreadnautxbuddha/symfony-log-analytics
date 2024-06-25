@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service\LogFileImporter\Support\Contracts;
+namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\Support\Contracts;
 
-use App\Util\File\SplFileObjectIteratorInterface;
-use App\Util\File\Support\Contracts;
+use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIteratorInterface;
+use Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 
 interface LogFileImporterInterface
 {

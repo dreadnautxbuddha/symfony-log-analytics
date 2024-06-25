@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace Dreadnaut\LogAnalyticsBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Exception\ValidationFailedException;
 /**
  * Primarily used to format returned exceptions based on the kind.
  *
- * @package App\EventListener
+ * @package Dreadnaut\LogAnalyticsBundle\EventListener
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

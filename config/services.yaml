@@ -12,12 +12,12 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     _instanceof:
-        App\Controller\Support\Contracts\InvokableControllerInterface:
+        Dreadnaut\LogAnalyticsBundle\Controller\Support\Contracts\InvokableControllerInterface:
             tags: ['controller.service_arguments']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
+    Dreadnaut\LogAnalyticsBundle\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
@@ -26,5 +26,5 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\EventListener\ExceptionListener:
+    Dreadnaut\LogAnalyticsBundle\EventListener\ExceptionListener:
         tags: [kernel.event_listener]

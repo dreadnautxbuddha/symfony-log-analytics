@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Unit\Util\File;
+namespace Dreadnaut\LogAnalyticsBundle\Tests\Unit\Util\File;
 
 use PHPUnit\Framework\TestCase;
-use App\Util\File\SplFileObjectIteratorInterface;
+use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIteratorInterface;
 use SplFileObject;
 
 use function array_map;

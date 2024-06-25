@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CommandInput\Import\Log;
+namespace Dreadnaut\LogAnalyticsBundle\CommandInput\Import\Log;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * result in the error. ie., supplying a value of `0.1` to a type-hint of `int` will result in the value being read as
  * `0`
  *
- * @package App\Command\Import\Log
+ * @package Dreadnaut\LogAnalyticsBundle\Command\Import\Log
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

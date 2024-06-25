@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Request\LogEntries;
+namespace Dreadnaut\LogAnalyticsBundle\Request\LogEntries;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Used in validating the request to {@see \App\Controller\LogEntries\CountController}
+ * Used in validating the request to {@see \Dreadnaut\LogAnalyticsBundle\Controller\LogEntries\CountController}
  *
- * @package App\Request\LogEntries
+ * @package Dreadnaut\LogAnalyticsBundle\Request\LogEntries
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

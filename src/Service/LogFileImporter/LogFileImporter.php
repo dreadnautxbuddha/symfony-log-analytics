@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Service\LogFileImporter;
+namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter;
 
-use App\Dto\Entity\LogEntry\Assembler\FromString;
-use App\Util\File\Support\Contracts;
+use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\Assembler\FromString;
+use Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 use Psr\Log\LoggerInterface;
 use SplFileObject;
 
 /**
- * @package App\Service\LogFileImporter
+ * @package Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

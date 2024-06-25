@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Functional\Command\Import\Log;
+namespace Dreadnaut\LogAnalyticsBundle\Tests\Functional\Command\Import\Log;
 
-use App\Entity\LogEntry;
-use App\Enum\Http\RequestMethod;
-use App\Repository\LogEntryRepository;
-use App\Service\LogFileImporter\LogEntryDtoImporter;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
+use Dreadnaut\LogAnalyticsBundle\Repository\LogEntryRepository;
+use Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\LogEntryDtoImporter;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Monolog\Logger;

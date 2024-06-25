@@ -37,12 +37,12 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\": "src/"
+      "Dreadnaut\\LogAnalyticsBundle\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "App\\Tests\\": "tests/"
+      "Dreadnaut\\LogAnalyticsBundle\\Tests\\": "tests/"
     }
   },
   "replace": {

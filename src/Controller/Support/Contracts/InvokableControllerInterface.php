@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\Support\Contracts;
+namespace Dreadnaut\LogAnalyticsBundle\Controller\Support\Contracts;
 
 /**
- * @package App\Controller\Support\Contracts
+ * @package Dreadnaut\LogAnalyticsBundle\Controller\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

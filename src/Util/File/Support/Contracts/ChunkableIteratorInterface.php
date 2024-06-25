@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Util\File\Support\Contracts;
+namespace Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 
 use Closure;
 use RecursiveIterator;
@@ -11,7 +11,7 @@ use SplFileObject;
  * Represents an iterator that has the ability to group iterable items together as an array for memory-conservative
  * processing.
  *
- * @package App\Util\File\Support\Contracts
+ * @package Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

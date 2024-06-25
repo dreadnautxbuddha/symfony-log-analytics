@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller\LogEntries;
+namespace Dreadnaut\LogAnalyticsBundle\Controller\LogEntries;
 
-use App\Controller\Support\Contracts\InvokableControllerInterface;
-use App\Repository\LogEntryRepository;
-use App\Request\LogEntries\CountRequest;
+use Dreadnaut\LogAnalyticsBundle\Controller\Support\Contracts\InvokableControllerInterface;
+use Dreadnaut\LogAnalyticsBundle\Repository\LogEntryRepository;
+use Dreadnaut\LogAnalyticsBundle\Request\LogEntries\CountRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  *     }
  * </code>
  *
- * @package App\Controller\LogEntries
+ * @package Dreadnaut\LogAnalyticsBundle\Controller\LogEntries
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

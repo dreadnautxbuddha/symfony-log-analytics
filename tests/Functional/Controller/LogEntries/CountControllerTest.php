@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Functional\Controller\LogEntries;
+namespace Dreadnaut\LogAnalyticsBundle\Tests\Functional\Controller\LogEntries;
 
-use App\Entity\LogEntry;
-use App\Enum\Http\RequestMethod;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

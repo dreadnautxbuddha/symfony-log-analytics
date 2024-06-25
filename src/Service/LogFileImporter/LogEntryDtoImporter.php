@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Service\LogFileImporter;
+namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter;
 
-use App\Entity;
-use App\Dto\Entity\LogEntry\LogEntry as LogEntryDto;
+use Dreadnaut\LogAnalyticsBundle\Entity;
+use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\LogEntry as LogEntryDto;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Responsible for importing {@see LogEntryDto} objects as {@see \App\Entity\LogEntry} objects
+ * Responsible for importing {@see LogEntryDto} objects as {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry} objects
  *
- * @package App\Service\LogFileImporter
+ * @package Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
@@ -20,7 +20,8 @@ class LogEntryDtoImporter
     }
 
     /**
-     * Receives an array of {@see LogEntryDto} data transfer objects and saves them as {@see \App\Entity\LogEntry}
+     * Receives an array of {@see LogEntryDto} data transfer objects and saves them as
+     * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry}
      * objects
      *
      * @param array<LogEntryDto> $log_entry_dtos

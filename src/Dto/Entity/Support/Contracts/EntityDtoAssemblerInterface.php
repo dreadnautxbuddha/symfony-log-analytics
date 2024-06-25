@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Dto\Entity\Support\Contracts;
+namespace Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts;
 
 /**
  * An assembler is responsible for transforming input from various data sources into data transfer objects.
  *
- * @package App\Dto\Entity\Interface
+ * @package Dreadnaut\LogAnalyticsBundle\Dto\Entity\Interface
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

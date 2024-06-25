@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Enum\Http\RequestMethod;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 

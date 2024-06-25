@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Command\Import\Log;
+namespace Dreadnaut\LogAnalyticsBundle\Command\Import\Log;
 
-use App\CommandInput\Import\Log\LocalCommandInput;
-use App\Service\LogFileImporter\Support\Contracts\LogFileImporterInterface;
-use App\Util\File\SplFileObjectIteratorInterface;
+use Dreadnaut\LogAnalyticsBundle\CommandInput\Import\Log\LocalCommandInput;
+use Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\Support\Contracts\LogFileImporterInterface;
+use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIteratorInterface;
 use SplFileObject;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * A command responsible for importing a log file that exists in the filesystem.
  *
- * @package App\Command\Import\Log
+ * @package Dreadnaut\LogAnalyticsBundle\Command\Import\Log
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

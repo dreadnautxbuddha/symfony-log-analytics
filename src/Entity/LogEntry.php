@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Entity;
+namespace Dreadnaut\LogAnalyticsBundle\Entity;
 
-use App\Entity\Support\Contracts\EntityInterface;
-use App\Enum\Http\RequestMethod;
-use App\Repository\LogEntryRepository;
+use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityInterface;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
+use Dreadnaut\LogAnalyticsBundle\Repository\LogEntryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -83,7 +83,7 @@ class LogEntry implements EntityInterface
     }
 
     /**
-     * @return \App\Enum\Http\RequestMethod|null
+     * @return \Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod|null
      */
     public function getHttpRequestMethod(): ?RequestMethod
     {
@@ -91,7 +91,7 @@ class LogEntry implements EntityInterface
     }
 
     /**
-     * @param \App\Enum\Http\RequestMethod $http_request_method
+     * @param \Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod $http_request_method
      *
      * @return $this
      */

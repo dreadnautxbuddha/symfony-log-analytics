@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace Dreadnaut\LogAnalyticsBundle\Repository;
 
-use App\Entity\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
