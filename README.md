@@ -1,12 +1,68 @@
 # Overview
-This application reads through a growing log file and saves each row into the database that looks like this:
-```text
-USER-SERVICE - - [17/Aug/2018:09:21:53 +0000] "POST /users HTTP/1.1" 201
-USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400
-INVOICE-SERVICE - - [17/Aug/2018:09:21:55 +0000] "POST /invoices HTTP/1.1" 201
-USER-SERVICE - - [17/Aug/2018:09:21:56 +0000] "POST /users HTTP/1.1" 201
-USER-SERVICE - - [17/Aug/2018:09:21:57 +0000] "POST /users HTTP/1.1" 201
-INVOICE-SERVICE - - [17/Aug/2018:09:22:58 +0000] "POST /invoices HTTP/1.1" 201
+This project serves as a technical exam for Legal One.
+
+# Setup
+
+### Environment Variables
+> ⚠️ Before anything else, you need to setup your .env file first. Both [Docker Compose](https://docs.docker.com/compose/) and the project needs it in order to work properly 
+
+First, copy the `.env` file to yours:
+
+```shell
+cp .env .env.local
 ```
 
-A `GET /count` endpoint will be used to count the number of log messages using under a specified criteria. Refer to the OpenAPI spec for more information. 
+then in your `.env.local` file, supply the following environment variables:
+
+1. `POSTGRES_USER`
+2. `POSTGRES_PASSWORD` 
+3. `POSTGRES_DB` 
+4. `SERVER_NAME` 
+5. `HTTP_PORT` 
+6. `HTTPS_PORT` 
+7. `HTTP3_PORT`
+
+After that, you can proceed with the next steps. 
+
+### Docker Compose
+This project uses [Docker Compose](https://docs.docker.com/compose/) for development. Simply clone the project, and run the following:
+
+```shell
+docker compose build
+docker compose up -d
+``` 
+
+### Install dependencies
+Once the containers are up and running, you can now install the dependencies by entering the `php` container:
+```shell
+docker compose exec -it php /bin/bash
+```
+
+and installing the Composer packages:
+
+```shell
+composer install
+```
+
+### Database migrations
+once you have installed the Composer packages, you can start running the migrations:
+
+```shell
+php bin/console doctrine:migrations:migrate
+```
+
+# Unit Tests
+Tests can be run by entering the `php` container again:
+
+```shell
+docker compose exec -it php /bin/bash
+```
+
+and running:
+
+```shell
+php bin/phpunit
+```
+
+# Usage
+Find out more about how this command is used [here](./docs/index.md).
