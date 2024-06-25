@@ -79,6 +79,7 @@
   },
   "require-dev": {
     "dama/doctrine-test-bundle": "^8.2",
+    "phpstan/phpstan": "^1.11",
     "phpunit/phpunit": "^9.5",
     "squizlabs/php_codesniffer": "*",
     "symfony/browser-kit": "7.1.*",
