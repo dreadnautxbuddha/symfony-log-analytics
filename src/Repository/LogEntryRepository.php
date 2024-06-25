@@ -50,17 +50,17 @@ class LogEntryRepository extends ServiceEntityRepository
         $criteria = new Criteria();
 
         if (! empty($serviceNames)) {
-            $criteria->where($criteria->expr()->in('service_name', $serviceNames));
+            $criteria->andWhere($criteria->expr()->in('service_name', $serviceNames));
         }
         if ($statusCode) {
-            $criteria->where($criteria->expr()->eq('http_status_code', $statusCode));
+            $criteria->andWhere($criteria->expr()->eq('http_status_code', $statusCode));
         }
         try {
             if ($startDate) {
-                $criteria->where($criteria->expr()->gte('logged_at', new DateTimeImmutable($startDate)));
+                $criteria->andWhere($criteria->expr()->gte('logged_at', new DateTimeImmutable($startDate)));
             }
             if ($endDate) {
-                $criteria->where($criteria->expr()->lte('logged_at', new DateTimeImmutable($endDate)));
+                $criteria->andWhere($criteria->expr()->lte('logged_at', new DateTimeImmutable($endDate)));
             }
         } catch (Exception) {
             // If it so happens that an exception is thrown while we're creating datetimes using the supplied format,

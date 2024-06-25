@@ -202,6 +202,71 @@ class CountControllerTest extends WebTestCase
     // phpcs:ignore
     public function testController_whenQueryingByEndDate_shouldOnlyReturnLogEntriesBeforeThatDate()
     {
+        $logEntry = new LogEntry();
+        $logEntry
+            ->setServiceName('my service')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:09'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($logEntry);
+        $logEntry = new LogEntry();
+        $logEntry
+            ->setServiceName('my service')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:10'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($logEntry);
+        $logEntry = new LogEntry();
+        $logEntry
+            ->setServiceName('my service')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:11'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($logEntry);
+        $logEntry = new LogEntry();
+        $logEntry
+            ->setServiceName('my service')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:12'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($logEntry);
+        $logEntry = new LogEntry();
+        $logEntry
+            ->setServiceName('my service')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:13'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($logEntry);
+        $this->entityManager->flush();
+        $data = http_build_query(['startDate' => '2024-06-30 22:15:10', 'endDate' => '2024-06-30 22:15:11']);
+
+        $this->client->request('GET', "logs/count?{$data}");
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals(
+            [
+                'data' => [
+                    'count' => 2,
+                ],
+            ],
+            json_decode($response->getContent(), true)
+        );
+    }
+
+    // phpcs:ignore
+    public function testController_whenQueryingByBothStartAndEndDate_shouldOnlyReturnLogEntriesBetweenTheDates()
+    {
         $pastLogEntry = new LogEntry();
         $pastLogEntry
             ->setServiceName('my service')
@@ -231,6 +296,76 @@ class CountControllerTest extends WebTestCase
         $this->entityManager->persist($futureLogEntry);
         $this->entityManager->flush();
         $data = http_build_query(['endDate' => '2024-06-30 22:15:14']);
+
+        $this->client->request('GET', "logs/count?{$data}");
+
+        $response = $this->client->getResponse();
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals(
+            [
+                'data' => [
+                    'count' => 2,
+                ],
+            ],
+            json_decode($response->getContent(), true)
+        );
+    }
+
+    // phpcs:ignore
+    public function testController_whenQueryingByAllFields_shouldOnlyReturnLogEntriesThatMatch()
+    {
+        $pastLogEntry = new LogEntry();
+        $pastLogEntry
+            ->setServiceName('service 1')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:10'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($pastLogEntry);
+        $pastLogEntry = new LogEntry();
+        $pastLogEntry
+            ->setServiceName('service 2')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:11'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($pastLogEntry);
+        $pastLogEntry = new LogEntry();
+        $pastLogEntry
+            ->setServiceName('service 3')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:12'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($pastLogEntry);
+        $currentLogEntry = new LogEntry();
+        $currentLogEntry
+            ->setServiceName('service 4')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:14'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(500);
+        $this->entityManager->persist($currentLogEntry);
+        $futureLogEntry = new LogEntry();
+        $futureLogEntry
+            ->setServiceName('service 5')
+            ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:15'))
+            ->setHttpRequestMethod(RequestMethod::POST)
+            ->setHttpRequestTarget('/my/api/endpoint')
+            ->setHttpVersion('1.1')
+            ->setHttpStatusCode(200);
+        $this->entityManager->persist($futureLogEntry);
+        $this->entityManager->flush();
+        $data = http_build_query([
+            'startDate' => '2024-06-30 22:15:10',
+            'endDate' => '2024-06-30 22:15:14',
+            'statusCode' => 200,
+            'serviceNames' => ['service 1', 'service 2'],
+        ]);
 
         $this->client->request('GET', "logs/count?{$data}");
 
