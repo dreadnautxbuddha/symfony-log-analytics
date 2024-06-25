@@ -69,6 +69,19 @@ and running:
 php bin/phpunit
 ```
 
+# Code Sniffing
+We have [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/) installed to ensure that our code always matches our standards. You can run it by:
+
+```shell
+vendor/bin/phpcs
+```
+
+and fix any errors automatically by running:
+
+```shell
+vendor/bin/phpcbf
+```
+
 # Usage
 The page can be accessed at the `SERVER_NAME` environment variable you supplied in your `.env.local` file.
 
