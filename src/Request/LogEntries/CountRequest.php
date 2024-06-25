@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class CountRequest
+final class CountRequest
 {
     /**
      * @param array<string> $serviceNames

@@ -15,7 +15,7 @@ use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class FromLogEntryDto implements EntityAssemblerInterface
+final class FromLogEntryDto implements EntityAssemblerInterface
 {
     /**
      * {@inheritDoc}

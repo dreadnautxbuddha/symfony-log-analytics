@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
 #[Route('/logs/count', name: 'log_entries.count', methods: ['GET'])]
-class CountController implements InvokableControllerInterface
+final class CountController implements InvokableControllerInterface
 {
     /**
      * @param ValidatorInterface $validator

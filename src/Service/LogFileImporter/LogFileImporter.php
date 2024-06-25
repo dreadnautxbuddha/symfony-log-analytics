@@ -12,7 +12,7 @@ use SplFileObject;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class LogFileImporter implements Support\Contracts\LogFileImporterInterface
+final class LogFileImporter implements Support\Contracts\LogFileImporterInterface
 {
     public function __construct(
         protected LogEntryDtoImporter $logEntryDtoImporter,

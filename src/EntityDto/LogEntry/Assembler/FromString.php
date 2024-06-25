@@ -22,7 +22,7 @@ use const PREG_SPLIT_DELIM_CAPTURE;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class FromString implements EntityDtoAssemblerInterface
+final class FromString implements EntityDtoAssemblerInterface
 {
     /**
      * The pattern we're using to ensure that an input looks somewhat like this:

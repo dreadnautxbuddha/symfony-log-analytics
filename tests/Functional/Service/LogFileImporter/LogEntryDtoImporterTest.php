@@ -53,7 +53,7 @@ class LogEntryDtoImporterTest extends KernelTestCase
     public function testImport_whenLogEntryCannotBeCreatedFromSuppliedDto_shouldNotImport()
     {
         /** @var EntityAssemblerInterface $assembler */
-        $assembler = $this->createMock(FromLogEntryDto::class);
+        $assembler = $this->createMock(EntityAssemblerInterface::class);
         $assembler->expects($this->once())->method('assemble')->willReturn(null);
         $logImporter = new LogEntryDtoImporter($this->entityManager, $assembler);
         $line = 'USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400';

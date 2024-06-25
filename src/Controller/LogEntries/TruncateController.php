@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
 #[Route('/logs', name: 'log_entries.delete', methods: ['DELETE'])]
-class TruncateController implements InvokableControllerInterface
+final class TruncateController implements InvokableControllerInterface
 {
     /**
      * @param LogEntryRepository $repository
