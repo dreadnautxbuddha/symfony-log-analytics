@@ -2,12 +2,12 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Tests\Unit\Repository;
 
-use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
-use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
-use Dreadnaut\LogAnalyticsBundle\Repository\LogEntryRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
+use Dreadnaut\LogAnalyticsBundle\Repository\LogEntryRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class LogEntryRepositoryTest extends KernelTestCase

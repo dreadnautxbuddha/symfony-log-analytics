@@ -1,9 +1,8 @@
 <?php
 
-namespace Dreadnaut\LogAnalyticsBundle\Entity\Assembler\Support\Contracts;
+namespace Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts;
 
 use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
-use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityInterface;
 
 /**
  * An assembler that is responsible for transforming a

@@ -2,11 +2,11 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Repository;
 
-use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
 use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry;
 use Exception;
 
 /**

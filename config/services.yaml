@@ -7,6 +7,7 @@ parameters:
 
 imports:
     - { resource: 'entity-dto.yaml' }
+    - { resource: 'entity.yaml' }
 
 services:
     # default configuration for services in *this* file
@@ -35,3 +36,7 @@ services:
     Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\LogFileImporter:
         arguments:
             $assembler: '@entitydto.log_entry.assembler.from_string'
+            
+    Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\LogEntryDtoImporter:
+        arguments:
+            $assembler: '@entity.log_entry.assembler.from_log_entry_dto'

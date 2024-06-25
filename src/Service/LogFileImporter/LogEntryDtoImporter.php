@@ -2,15 +2,15 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Dreadnaut\LogAnalyticsBundle\Entity;
 use Dreadnaut\LogAnalyticsBundle\EntityDto;
-use Doctrine\ORM\EntityManagerInterface;
 
 use function is_null;
 
 /**
  * Responsible for importing {@see EntityDto\LogEntry\LogEntry} objects as
- * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry} objects
+ * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry} objects
  *
  * @package Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter
  *
@@ -20,14 +20,14 @@ class LogEntryDtoImporter
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected Entity\Assembler\Support\Contracts\EntityAssemblerInterface $assembler
+        protected Entity\Support\Contracts\EntityAssemblerInterface $assembler
     )
     {
     }
 
     /**
      * Receives an array of {@see LogEntryDto} data transfer objects and saves them as
-     * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry}
+     * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry}
      * objects
      *
      * @param array<EntityDto\LogEntry\LogEntry> $log_entry_dtos

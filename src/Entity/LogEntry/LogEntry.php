@@ -1,12 +1,12 @@
 <?php
 
-namespace Dreadnaut\LogAnalyticsBundle\Entity;
+namespace Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
 
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityInterface;
 use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use Dreadnaut\LogAnalyticsBundle\Repository\LogEntryRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LogEntryRepository::class)]
 class LogEntry implements EntityInterface

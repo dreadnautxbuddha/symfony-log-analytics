@@ -2,7 +2,7 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Command\Import\Log;
 
-use Dreadnaut\LogAnalyticsBundle\CommandInput\Import\Log\LocalCommandInput;
+use Dreadnaut\LogAnalyticsBundle\Command\Import\Log\Input\Cli;
 use Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\Support\Contracts\LogFileImporterInterface;
 use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIteratorInterface;
 use SplFileObject;
@@ -75,7 +75,7 @@ class LocalCommand extends Command
         $offset = $input->getOption('offset');
         $limit = $input->getOption('limit');
         $chunk_size = $input->getOption('chunk-size');
-        $errors = $this->validator->validate(new LocalCommandInput($path, $offset, $limit, $chunk_size));
+        $errors = $this->validator->validate(new Cli($path, $offset, $limit, $chunk_size));
 
         if (count($errors) > 0) {
             foreach ($errors as $error) {

@@ -2,15 +2,15 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Tests\Functional\Service\LogFileImporter;
 
-use Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler\FromString;
-use Dreadnaut\LogAnalyticsBundle\Entity\Assembler\LogEntry\FromLogEntryDto;
-use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
-use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
-use Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\LogEntryDtoImporter;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\Assembler\FromLogEntryDto;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityAssemblerInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler\FromString;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
+use Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\LogEntryDtoImporter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Dreadnaut\LogAnalyticsBundle\Entity\Assembler\Support\Contracts\EntityAssemblerInterface;
 
 class LogEntryDtoImporterTest extends KernelTestCase
 {

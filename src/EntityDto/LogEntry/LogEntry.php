@@ -2,12 +2,13 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry;
 
+use DateTimeImmutable;
 use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
-use DateTimeImmutable;
 
 /**
- * A data transfer object that can be converted directly into a {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry}
+ * A data transfer object that can be converted directly into a
+ * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry}
  * entity.
  *
  * @package Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry

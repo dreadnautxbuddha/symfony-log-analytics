@@ -2,10 +2,10 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Tests\Functional\Controller\LogEntries;
 
-use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry;
-use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry;
+use Dreadnaut\LogAnalyticsBundle\Enum\Http\RequestMethod;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;

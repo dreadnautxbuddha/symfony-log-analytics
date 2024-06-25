@@ -1,11 +1,11 @@
 <?php
 
-namespace Dreadnaut\LogAnalyticsBundle\Entity\Assembler\LogEntry;
+namespace Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\Assembler;
 
 use Dreadnaut\LogAnalyticsBundle\Entity;
-use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
-use Dreadnaut\LogAnalyticsBundle\Entity\Assembler\Support\Contracts\EntityAssemblerInterface;
+use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityAssemblerInterface;
 use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 
 /**
  * Maps an {@see EntityDtoInterface entity dto} into an {@see EntityInterface entity}
@@ -21,7 +21,7 @@ class FromLogEntryDto implements EntityAssemblerInterface
      */
     public function assemble(EntityDtoInterface $entityDto): ?EntityInterface
     {
-        $log_entry = new Entity\LogEntry();
+        $log_entry = new Entity\LogEntry\LogEntry();
 
         $log_entry
             ->setServiceName($entityDto->serviceName)
