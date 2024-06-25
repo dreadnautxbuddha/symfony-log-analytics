@@ -23,38 +23,39 @@ class LogEntryRepositoryTest extends KernelTestCase
         $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
     }
 
+    // phpcs:ignore
     public function testCountBy_whenSuppliedWithInvalidDateTimeString_shouldNotThrowException()
     {
-        $past_log_entry = new LogEntry();
-        $past_log_entry
+        $pastLogEntry = new LogEntry();
+        $pastLogEntry
             ->setServiceName('my service 1')
             ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:12'))
             ->setHttpRequestMethod(RequestMethod::POST)
             ->setHttpRequestTarget('/my/api/endpoint')
             ->setHttpVersion('1.1')
             ->setHttpStatusCode(200);
-        $this->entityManager->persist($past_log_entry);
-        $current_log_entry = new LogEntry();
-        $current_log_entry
+        $this->entityManager->persist($pastLogEntry);
+        $currentLogEntry = new LogEntry();
+        $currentLogEntry
             ->setServiceName('my service 2')
             ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:14'))
             ->setHttpRequestMethod(RequestMethod::POST)
             ->setHttpRequestTarget('/my/api/endpoint')
             ->setHttpVersion('1.1')
             ->setHttpStatusCode(422);
-        $this->entityManager->persist($current_log_entry);
-        $future_log_entry = new LogEntry();
-        $future_log_entry
+        $this->entityManager->persist($currentLogEntry);
+        $futureLogEntry = new LogEntry();
+        $futureLogEntry
             ->setServiceName('my service 3')
             ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:15'))
             ->setHttpRequestMethod(RequestMethod::POST)
             ->setHttpRequestTarget('/my/api/endpoint')
             ->setHttpVersion('1.1')
             ->setHttpStatusCode(500);
-        $this->entityManager->persist($future_log_entry);
+        $this->entityManager->persist($futureLogEntry);
         $this->entityManager->flush();
-        $manager_registry = $this->getContainer()->get(ManagerRegistry::class);
-        $repository = new LogEntryRepository($manager_registry);
+        $managerRegistry = $this->getContainer()->get(ManagerRegistry::class);
+        $repository = new LogEntryRepository($managerRegistry);
 
         $count = $repository->countBy([], null, 'invalid date', 'invalid date');
 

@@ -23,42 +23,43 @@ class TruncateControllerTest extends WebTestCase
         $this->entityManager = self::$kernel->getContainer()->get('doctrine')->getManager();
     }
 
+    // phpcs:ignore
     public function testController_whenDeletingLogs_shouldDeleteAllLogs()
     {
-        $past_log_entry = new LogEntry();
-        $past_log_entry
+        $pastLogEntry = new LogEntry();
+        $pastLogEntry
             ->setServiceName('my service 1')
             ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:12'))
             ->setHttpRequestMethod(RequestMethod::POST)
             ->setHttpRequestTarget('/my/api/endpoint')
             ->setHttpVersion('1.1')
             ->setHttpStatusCode(200);
-        $this->entityManager->persist($past_log_entry);
-        $current_log_entry = new LogEntry();
-        $current_log_entry
+        $this->entityManager->persist($pastLogEntry);
+        $currentLogEntry = new LogEntry();
+        $currentLogEntry
             ->setServiceName('my service 2')
             ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:14'))
             ->setHttpRequestMethod(RequestMethod::POST)
             ->setHttpRequestTarget('/my/api/endpoint')
             ->setHttpVersion('1.1')
             ->setHttpStatusCode(422);
-        $this->entityManager->persist($current_log_entry);
-        $future_log_entry = new LogEntry();
-        $future_log_entry
+        $this->entityManager->persist($currentLogEntry);
+        $futureLogEntry = new LogEntry();
+        $futureLogEntry
             ->setServiceName('my service 3')
             ->setLoggedAt(new DateTimeImmutable('2024-06-30 22:15:15'))
             ->setHttpRequestMethod(RequestMethod::POST)
             ->setHttpRequestTarget('/my/api/endpoint')
             ->setHttpVersion('1.1')
             ->setHttpStatusCode(500);
-        $this->entityManager->persist($future_log_entry);
+        $this->entityManager->persist($futureLogEntry);
         $this->entityManager->flush();
 
         $this->client->request('DELETE', 'logs');
-        $log_entries = $this->entityManager->getRepository(LogEntry::class)->findAll();
+        $logEntries = $this->entityManager->getRepository(LogEntry::class)->findAll();
 
         $response = $this->client->getResponse();
         $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
-        $this->assertEmpty($log_entries);
+        $this->assertEmpty($logEntries);
     }
 }

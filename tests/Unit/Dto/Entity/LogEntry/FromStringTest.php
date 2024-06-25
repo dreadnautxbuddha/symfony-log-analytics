@@ -10,13 +10,14 @@ class FromStringTest extends TestCase
     /**
      * @dataProvider invalidInput
      */
+    // phpcs:ignore
     public function testAssemble_whenInputIsInvalid_shouldReturnNull(string $input)
     {
         $assembler = new FromString();
 
-        $entity_dto = $assembler->assemble($input);
+        $entityDto = $assembler->assemble($input);
 
-        $this->assertNull($entity_dto);
+        $this->assertNull($entityDto);
     }
 
     public static function invalidInput(): array
@@ -49,6 +50,7 @@ class FromStringTest extends TestCase
             ['[18/Aug/2018:10:33:59 +0000]'],
             ['"POST /users HTTP/1.1" 201'],
             ['201'],
+            // phpcs:ignore
             ['INVOICE-SERVICE - - [18/Aug/2018:10:26:53 +0000] "POST /invoices HTTP/1.1" 201 INVOICE-SERVICE - - [18/Aug/2018:10:26:53 +0000] "POST /invoices HTTP/1.1" 201'],
         ];
     }

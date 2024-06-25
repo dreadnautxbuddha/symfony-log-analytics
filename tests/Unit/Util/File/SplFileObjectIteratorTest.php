@@ -11,10 +11,13 @@ use function trim;
 
 class SplFileObjectIteratorTest extends TestCase
 {
+    // phpcs:ignore
     public function testIteration_whenChunkSizeIsSet_shouldChunkLines()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(
+            new SplFileObject('tests/Data/Service/LogFileImporter/logs.log')
+        );
         $iterable->chunk(2);
 
         foreach ($iterable as $lines) {
@@ -73,10 +76,13 @@ class SplFileObjectIteratorTest extends TestCase
         );
     }
 
+    // phpcs:ignore
     public function testIteration_whenChunkSizeIsNotSet_shouldChunkLines()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(
+            new SplFileObject('tests/Data/Service/LogFileImporter/logs.log')
+        );
 
         foreach ($iterable as $line) {
             $chunks[] = trim($line->fgets());
@@ -111,10 +117,13 @@ class SplFileObjectIteratorTest extends TestCase
         );
     }
 
+    // phpcs:ignore
     public function testIteration_whenOffsetIsSupplied_shouldOnlyReadFromThatLine()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(
+            new SplFileObject('tests/Data/Service/LogFileImporter/logs.log')
+        );
         $iterable->seek(19);
 
         while ($iterable->valid()) {
@@ -131,10 +140,13 @@ class SplFileObjectIteratorTest extends TestCase
         );
     }
 
+    // phpcs:ignore
     public function testIteration_whenLimitIsSupplied_shouldOnlyReadUntilThatLine()
     {
         $lines = [];
-        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(
+            new SplFileObject('tests/Data/Service/LogFileImporter/logs.log')
+        );
         $iterable->limit(2);
 
         while ($iterable->valid()) {
@@ -150,10 +162,13 @@ class SplFileObjectIteratorTest extends TestCase
         );
     }
 
+    // phpcs:ignore
     public function testIteration_whenLimitAndOffsetIsSupplied_shouldReturnCorrectRows()
     {
         $lines = [];
-        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(
+            new SplFileObject('tests/Data/Service/LogFileImporter/logs.log')
+        );
         $iterable->seek(17);
         $iterable->limit(2);
 
@@ -170,10 +185,13 @@ class SplFileObjectIteratorTest extends TestCase
         );
     }
 
+    // phpcs:ignore
     public function testIteration_whenLimitOffsetAndChunkIsSupplied_shouldReturnCorrectRows()
     {
         $chunks = [];
-        $iterable = new SplFileObjectIteratorInterface(new SplFileObject('tests/Data/Service/LogFileImporter/logs.log'));
+        $iterable = new SplFileObjectIteratorInterface(
+            new SplFileObject('tests/Data/Service/LogFileImporter/logs.log')
+        );
         $iterable->seek(5);
         $iterable->chunk(3);
         $iterable->limit(6);

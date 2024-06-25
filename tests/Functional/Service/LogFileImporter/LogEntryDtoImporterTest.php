@@ -29,37 +29,39 @@ class LogEntryDtoImporterTest extends KernelTestCase
         $this->assembler = new FromString();
     }
 
+    // phpcs:ignore
     public function testImport_whenNotEmpty_shouldSaveToDatabase()
     {
         $line = 'USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400';
         $repository = $this->entityManager->getRepository(LogEntry::class);
 
         $this->logImporter->import([$this->assembler->assemble($line)]);
-        $log_entries = $repository->findAll();
-        /** @var LogEntry $log_entry */
-        [$log_entry] = $log_entries;
+        $logEntries = $repository->findAll();
+        /** @var LogEntry $logEntry */
+        [$logEntry] = $logEntries;
 
-        $this->assertCount(1, $log_entries);
-        $this->assertEquals('USER-SERVICE', $log_entry->getServiceName());
-        $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:21:54 +0000'), $log_entry->getLoggedAt());
-        $this->assertEquals(RequestMethod::POST, $log_entry->getHttpRequestMethod());
-        $this->assertEquals('/users', $log_entry->getHttpRequestTarget());
-        $this->assertEquals('1.1', $log_entry->getHttpVersion());
-        $this->assertEquals('400', $log_entry->getHttpStatusCode());
+        $this->assertCount(1, $logEntries);
+        $this->assertEquals('USER-SERVICE', $logEntry->getServiceName());
+        $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:21:54 +0000'), $logEntry->getLoggedAt());
+        $this->assertEquals(RequestMethod::POST, $logEntry->getHttpRequestMethod());
+        $this->assertEquals('/users', $logEntry->getHttpRequestTarget());
+        $this->assertEquals('1.1', $logEntry->getHttpVersion());
+        $this->assertEquals('400', $logEntry->getHttpStatusCode());
     }
 
+    // phpcs:ignore
     public function testImport_whenLogEntryCannotBeCreatedFromSuppliedDto_shouldNotImport()
     {
         /** @var EntityAssemblerInterface $assembler */
         $assembler = $this->createMock(FromLogEntryDto::class);
         $assembler->expects($this->once())->method('assemble')->willReturn(null);
-        $log_importer = new LogEntryDtoImporter($this->entityManager, $assembler);
+        $logImporter = new LogEntryDtoImporter($this->entityManager, $assembler);
         $line = 'USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400';
         $repository = $this->entityManager->getRepository(LogEntry::class);
 
-        $log_importer->import([$this->assembler->assemble($line)]);
-        $log_entries = $repository->findAll();
+        $logImporter->import([$this->assembler->assemble($line)]);
+        $logEntries = $repository->findAll();
 
-        $this->assertEmpty($log_entries);
+        $this->assertEmpty($logEntries);
     }
 }

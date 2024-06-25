@@ -198,141 +198,155 @@ class LocalCommandTest extends KernelTestCase
         $this->repository = $this->entityManager->getRepository(LogEntry::class);
     }
 
+    // phpcs:ignore
     public function testExecute_whenFileAtSpecifiedPathDoesNotExist_shouldReturnError()
     {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $exitCode = $command_tester->execute([
+        $exitCode = $commandTester->execute([
             'path' => 'unknown/path/to/file',
         ]);
 
         $this->assertEquals(1, $exitCode);
-        $this->assertEquals('The file at the specified path could not be found.', trim($command_tester->getDisplay()));
+        $this->assertEquals('The file at the specified path could not be found.', trim($commandTester->getDisplay()));
     }
 
     /**
      * @dataProvider invalidInteger
      */
+    // phpcs:ignore
     public function testExecute_whenOffsetIsInvalid_shouldReturnError(
-        mixed $invalid_integer,
-        mixed $error_message_identifier
+        mixed $invalidInteger,
+        mixed $errorMessageIdentifier
     ) {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $exitCode = $command_tester->execute([
+        $exitCode = $commandTester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            '--offset' => $invalid_integer,
-        ]);
-
-        $this->assertEquals(1, $exitCode);
-        $this->assertEquals("The offset {$error_message_identifier} must be an integer.", trim($command_tester->getDisplay()));
-    }
-
-    /**
-     * @dataProvider invalidInteger
-     */
-    public function testExecute_whenLimitIsInvalid_shouldReturnError(
-        mixed $invalid_integer,
-        mixed $error_message_identifier
-    ) {
-        $command_tester = new CommandTester($this->command);
-
-        $exitCode = $command_tester->execute([
-            'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            '--limit' => $invalid_integer,
-        ]);
-
-        $this->assertEquals(1, $exitCode);
-        $this->assertEquals("The limit {$error_message_identifier} must be an integer.", trim($command_tester->getDisplay()));
-    }
-
-    /**
-     * @dataProvider invalidInteger
-     */
-    public function testExecute_whenChunkSizeIsInvalid_shouldReturnError(
-        mixed $invalid_integer,
-        mixed $error_message_identifier
-    ) {
-        $command_tester = new CommandTester($this->command);
-
-        $exitCode = $command_tester->execute([
-            'path' => 'tests/Data/Service/LogFileImporter/logs.log',
-            '--chunk-size' => $invalid_integer,
+            '--offset' => $invalidInteger,
         ]);
 
         $this->assertEquals(1, $exitCode);
         $this->assertEquals(
-            "The chunk size {$error_message_identifier} must be an integer.",
-            trim($command_tester->getDisplay())
+            "The offset {$errorMessageIdentifier} must be an integer.",
+            trim($commandTester->getDisplay())
         );
     }
 
+    /**
+     * @dataProvider invalidInteger
+     */
+    // phpcs:ignore
+    public function testExecute_whenLimitIsInvalid_shouldReturnError(
+        mixed $invalidInteger,
+        mixed $errorMessageIdentifier
+    ) {
+        $commandTester = new CommandTester($this->command);
+
+        $exitCode = $commandTester->execute([
+            'path' => 'tests/Data/Service/LogFileImporter/logs.log',
+            '--limit' => $invalidInteger,
+        ]);
+
+        $this->assertEquals(1, $exitCode);
+        $this->assertEquals(
+            "The limit {$errorMessageIdentifier} must be an integer.",
+            trim($commandTester->getDisplay())
+        );
+    }
+
+    /**
+     * @dataProvider invalidInteger
+     */
+    // phpcs:ignore
+    public function testExecute_whenChunkSizeIsInvalid_shouldReturnError(
+        mixed $invalidInteger,
+        mixed $errorMessageIdentifier
+    ) {
+        $commandTester = new CommandTester($this->command);
+
+        $exitCode = $commandTester->execute([
+            'path' => 'tests/Data/Service/LogFileImporter/logs.log',
+            '--chunk-size' => $invalidInteger,
+        ]);
+
+        $this->assertEquals(1, $exitCode);
+        $this->assertEquals(
+            "The chunk size {$errorMessageIdentifier} must be an integer.",
+            trim($commandTester->getDisplay())
+        );
+    }
+
+    // phpcs:ignore
     public function testExecute_whenFileAtSpecifiedPathExists_shouldReturnSuccess()
     {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $exitCode = $command_tester->execute([
+        $exitCode = $commandTester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
         ]);
 
         $this->assertEquals(0, $exitCode);
     }
 
+    // phpcs:ignore
     public function testExecute_whenFileAtSpecifiedPathExists_shouldInsertLogEntriesToTheDatabase()
     {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/logs.log']);
-        $log_entries = $this->repository->findAll();
+        $commandTester->execute(['path' => 'tests/Data/Service/LogFileImporter/logs.log']);
+        $logEntries = $this->repository->findAll();
 
-        $this->assertCount(20, $log_entries);
-        foreach ($log_entries as $index => $log_entry) {
-            $this->assertEquals($this->logEntriesInLogFile[$index]['service_name'], $log_entry->getServiceName());
+        $this->assertCount(20, $logEntries);
+        foreach ($logEntries as $index => $logEntry) {
+            $this->assertEquals($this->logEntriesInLogFile[$index]['service_name'], $logEntry->getServiceName());
             $this->assertEquals(
                 new DateTimeImmutable($this->logEntriesInLogFile[$index]['logged_at']),
-                $log_entry->getLoggedAt()
+                $logEntry->getLoggedAt()
             );
             $this->assertEquals(
                 RequestMethod::tryFrom($this->logEntriesInLogFile[$index]['http_request_method']),
-                $log_entry->getHttpRequestMethod()
+                $logEntry->getHttpRequestMethod()
             );
             $this->assertEquals(
                 $this->logEntriesInLogFile[$index]['http_request_target'],
-                $log_entry->getHttpRequestTarget()
+                $logEntry->getHttpRequestTarget()
             );
             $this->assertEquals(
                 $this->logEntriesInLogFile[$index]['http_version'],
-                $log_entry->getHttpVersion()
+                $logEntry->getHttpVersion()
             );
             $this->assertEquals(
                 $this->logEntriesInLogFile[$index]['http_status_code'],
-                $log_entry->getHttpStatusCode()
+                $logEntry->getHttpStatusCode()
             );
         }
     }
 
+    // phpcs:ignore
     public function testExecute_whenChoosingOnlySpecificLinesToImport_shouldOnlyImportThoseLines()
     {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $command_tester->execute([
+        $commandTester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
             '--offset' => 5,
             '--limit' => 1,
         ]);
-        $log_entries = $this->repository->findAll();
-        /** @var LogEntry $log_entry */
-        [$log_entry] = $log_entries;
+        $logEntries = $this->repository->findAll();
+        /** @var LogEntry $logEntry */
+        [$logEntry] = $logEntries;
 
-        $this->assertCount(1, $log_entries);
-        $this->assertEquals('INVOICE-SERVICE', $log_entry->getServiceName());
-        $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:22:58 +0000'), $log_entry->getLoggedAt());
-        $this->assertEquals(RequestMethod::from('POST'), $log_entry->getHttpRequestMethod());
-        $this->assertEquals('/invoices', $log_entry->getHttpRequestTarget());
-        $this->assertEquals('1.1', $log_entry->getHttpVersion());
-        $this->assertEquals(201, $log_entry->getHttpStatusCode());
+        $this->assertCount(1, $logEntries);
+        $this->assertEquals('INVOICE-SERVICE', $logEntry->getServiceName());
+        $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:22:58 +0000'), $logEntry->getLoggedAt());
+        $this->assertEquals(RequestMethod::from('POST'), $logEntry->getHttpRequestMethod());
+        $this->assertEquals('/invoices', $logEntry->getHttpRequestTarget());
+        $this->assertEquals('1.1', $logEntry->getHttpVersion());
+        $this->assertEquals(201, $logEntry->getHttpStatusCode());
     }
 
+    // phpcs:ignore
     public function testExecute_whenChunkSizeIsSupplied_shouldFlushNTimes()
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -340,14 +354,15 @@ class LocalCommandTest extends KernelTestCase
 
         $logEntryDtoImporter = new LogEntryDtoImporter($entityManager, new FromLogEntryDto());
         $this->getContainer()->set(LogEntryDtoImporter::class, $logEntryDtoImporter);
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $command_tester->execute([
+        $commandTester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
             '--chunk-size' => 2,
         ]);
     }
 
+    // phpcs:ignore
     public function testExecute_whenChunkSizeIsSupplied_shouldClearNTimes()
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
@@ -355,31 +370,33 @@ class LocalCommandTest extends KernelTestCase
 
         $logEntryDtoImporter = new LogEntryDtoImporter($entityManager, new FromLogEntryDto());
         $this->getContainer()->set(LogEntryDtoImporter::class, $logEntryDtoImporter);
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $command_tester->execute([
+        $commandTester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
             '--chunk-size' => 2,
         ]);
     }
 
+    // phpcs:ignore
     public function testExecute_whenChunkSizeIsSupplied_shouldSaveAllLogEntriesToDatabase()
     {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $command_tester->execute([
+        $commandTester->execute([
             'path' => 'tests/Data/Service/LogFileImporter/logs.log',
             '--chunk-size' => 2,
         ]);
-        $log_entries = $this->repository->findAll();
+        $logEntries = $this->repository->findAll();
 
-        $this->assertCount(20, $log_entries);
+        $this->assertCount(20, $logEntries);
     }
 
+    // phpcs:ignore
     public function testExecute_whenLogEntryDoesNotMatchExpectedFormat_shouldBeLogged()
     {
         $monolog = $this->createMock(Logger::class);
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
         $monolog
             ->expects($this->exactly(28))
             ->method('warning')
@@ -387,28 +404,30 @@ class LocalCommandTest extends KernelTestCase
 
         $this->getContainer()->set(LoggerInterface::class, $monolog);
 
-        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/bad.log']);
+        $commandTester->execute(['path' => 'tests/Data/Service/LogFileImporter/bad.log']);
     }
 
+    // phpcs:ignore
     public function testExecute_whenLogEntryDoesNotMatchExpectedFormat_shouldNotSaveLogEntriesToDatabase()
     {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/bad.log']);
-        $log_entries = $this->repository->findAll();
+        $commandTester->execute(['path' => 'tests/Data/Service/LogFileImporter/bad.log']);
+        $logEntries = $this->repository->findAll();
 
-        $this->assertEmpty($log_entries);
+        $this->assertEmpty($logEntries);
     }
 
+    // phpcs:ignore
     public function testExecute_whenLogEntryContainsBothGoodAndBadEntries_shouldOnlySaveGoodLogEntriesToDatabase()
     {
-        $command_tester = new CommandTester($this->command);
+        $commandTester = new CommandTester($this->command);
 
-        $command_tester->execute(['path' => 'tests/Data/Service/LogFileImporter/mixed.log']);
-        $log_entries = $this->repository->findAll();
-        [$first, $second, $third] = $log_entries;
+        $commandTester->execute(['path' => 'tests/Data/Service/LogFileImporter/mixed.log']);
+        $logEntries = $this->repository->findAll();
+        [$first, $second, $third] = $logEntries;
 
-        $this->assertCount(3, $log_entries);
+        $this->assertCount(3, $logEntries);
         $this->assertEquals('USER-SERVICE', $first->getServiceName());
         $this->assertEquals(new DateTimeImmutable('17/Aug/2018:09:21:53 +0000'), $first->getLoggedAt());
         $this->assertEquals(RequestMethod::POST, $first->getHttpRequestMethod());
