@@ -9,7 +9,7 @@ USER-SERVICE - - [17/Aug/2018:09:21:57 +0000] "POST /users HTTP/1.1" 201
 INVOICE-SERVICE - - [17/Aug/2018:09:22:58 +0000] "POST /invoices HTTP/1.1" 201
 ```
 
-There are a couple of API endpoints used to interact with the log entries. Refer to the [OpenAPI spec](openapi.yaml) for more information.
+There are a couple of API endpoints used to interact with the log entries. Refer to the [OpenAPI spec](../openapi.yaml) for more information.
 
 # Console Command
 This long-running console command will be responsible for importing log files that exist in the filesystem, and can be run like so:
