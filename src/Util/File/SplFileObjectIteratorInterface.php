@@ -98,6 +98,8 @@ class SplFileObjectIteratorInterface implements
      * {@see self::$getChunkItemDataCallback information about the chunk}.
      *
      * @todo Test performance when the chunk size reaches upwards of thousands since we are passing this object n times.
+     *
+     * @return array<int, array<int, string|SplFileObject>>|SplFileObject
      */
     public function current(): string|array|false|SplFileObject
     {
@@ -175,6 +177,8 @@ class SplFileObjectIteratorInterface implements
 
     /**
      * @inheritDoc
+     *
+     * @return RecursiveIterator<int, mixed>
      */
     public function getChildren(): ?RecursiveIterator
     {

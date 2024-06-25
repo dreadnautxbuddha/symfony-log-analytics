@@ -9,6 +9,9 @@ use SeekableIterator;
  * Represents a paginable iterator. Since the {@see SeekableIterator} interface already allows the specification of an
  * {@see SeekableIterator::seek() offset} before iterating this one just focuses on limiting the results.
  *
+ * @extends RecursiveIterator<int, \SplFileObject>
+ * @extends SeekableIterator<int, \SplFileObject>
+ *
  * @package Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>

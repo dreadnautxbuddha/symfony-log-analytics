@@ -11,6 +11,9 @@ use SplFileObject;
  * Represents an iterator that has the ability to group iterable items together as an array for memory-conservative
  * processing.
  *
+ * @extends RecursiveIterator<int, \SplFileObject>
+ * @extends SeekableIterator<int, \SplFileObject>
+ *
  * @package Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>

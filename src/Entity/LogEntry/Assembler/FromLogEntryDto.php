@@ -5,6 +5,7 @@ namespace Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\Assembler;
 use Dreadnaut\LogAnalyticsBundle\Entity;
 use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityAssemblerInterface;
 use Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts\EntityInterface;
+use Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\LogEntry;
 use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 
 /**
@@ -17,7 +18,9 @@ use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 class FromLogEntryDto implements EntityAssemblerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
+     * @param LogEntry $entityDto
      */
     public function assemble(EntityDtoInterface $entityDto): ?EntityInterface
     {

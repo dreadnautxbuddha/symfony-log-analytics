@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Dreadnaut\LogAnalyticsBundle\Entity;
 use Dreadnaut\LogAnalyticsBundle\EntityDto;
 
+use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 use function is_null;
 
 /**
@@ -29,7 +30,7 @@ class LogEntryDtoImporter
      * {@see \Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\LogEntry}
      * objects
      *
-     * @param array<EntityDto\LogEntry\LogEntry> $logEntryDtos
+     * @param array<EntityDto\LogEntry\LogEntry|EntityDtoInterface> $logEntryDtos
      *
      * @return void
      */

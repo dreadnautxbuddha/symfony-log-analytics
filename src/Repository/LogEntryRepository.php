@@ -34,10 +34,10 @@ class LogEntryRepository extends ServiceEntityRepository
      * {@see LogEntry::$http_status_code} matches the supplied one, whose {@see LogEntry::$logged_at} is greater than or
      * equal to the start date, less than or equal to the end date, or in between.
      *
-     * @param array       $serviceNames
-     * @param int|null    $statusCode
-     * @param string|null $startDate
-     * @param string|null $endDate
+     * @param array<string> $serviceNames
+     * @param int|null      $statusCode
+     * @param string|null   $startDate
+     * @param string|null   $endDate
      *
      * @return int
      */

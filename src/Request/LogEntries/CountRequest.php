@@ -5,7 +5,8 @@ namespace Dreadnaut\LogAnalyticsBundle\Request\LogEntries;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Used in validating the request to {@see \Dreadnaut\LogAnalyticsBundle\Controller\LogEntries\CountController}
+ * Used in validating the request to
+ * {@see \Dreadnaut\LogAnalyticsBundle\Controller\LogEntries\CountController}
  *
  * @package Dreadnaut\LogAnalyticsBundle\Request\LogEntries
  *
@@ -14,13 +15,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CountRequest
 {
     /**
-     * @todo Make {@see CountRequest::$serviceNames} and {@see CountRequest::$statusCode} readonly. Had to remove
-     *       temporarily to make tests pass
+     * @param array<string> $serviceNames
+     * @param string|null   $startDate
+     * @param string|null   $endDate
+     * @param int|null      $statusCode
      *
-     * @param array       $serviceNames
-     * @param string|null $startDate
-     * @param string|null $endDate
-     * @param int|null    $statusCode
+     * @todo Make {@see CountRequest::$serviceNames} and {@see CountRequest::$statusCode} readonly. Had to remove
+     *      temporarily to make tests pass
      */
     public function __construct(
         #[Assert\Type('array')]

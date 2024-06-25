@@ -12,6 +12,7 @@ use Exception;
 use function array_filter;
 use function array_values;
 use function count;
+use function intval;
 use function preg_split;
 
 use const PREG_SPLIT_DELIM_CAPTURE;
@@ -72,7 +73,7 @@ class FromString implements EntityDtoAssemblerInterface
                 RequestMethod::from($httpRequestMethod),
                 $httpRequestTarget,
                 $httpVersion,
-                $httpStatusCode
+                intval($httpStatusCode)
             );
         } catch (Exception) {
         }
