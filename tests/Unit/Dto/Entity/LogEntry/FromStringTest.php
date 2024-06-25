@@ -12,9 +12,9 @@ class FromStringTest extends TestCase
      */
     public function testAssemble_whenInputIsInvalid_shouldReturnNull(string $input)
     {
-        $assembler = new FromString($input);
+        $assembler = new FromString();
 
-        $entity_dto = $assembler->assemble();
+        $entity_dto = $assembler->assemble($input);
 
         $this->assertNull($entity_dto);
     }

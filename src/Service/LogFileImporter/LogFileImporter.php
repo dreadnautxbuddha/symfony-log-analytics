@@ -2,7 +2,7 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter;
 
-use Dreadnaut\LogAnalyticsBundle\Dto\Entity\LogEntry\Assembler\FromString;
+use Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts\EntityDtoAssemblerInterface;
 use Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 use Psr\Log\LoggerInterface;
 use SplFileObject;
@@ -14,7 +14,11 @@ use SplFileObject;
  */
 class LogFileImporter implements Support\Contracts\LogFileImporterInterface
 {
-    public function __construct(protected LogEntryDtoImporter $logEntryDtoImporter, protected LoggerInterface $logger)
+    public function __construct(
+        protected LogEntryDtoImporter $logEntryDtoImporter,
+        protected LoggerInterface $logger,
+        protected EntityDtoAssemblerInterface $assembler
+    )
     {
     }
 
@@ -38,8 +42,7 @@ class LogFileImporter implements Support\Contracts\LogFileImporterInterface
             // Because we are chunking the lines that are being read from the file, each iteration using a loop will
             // yield an array of lines, instead of a string comprising a single line.
             foreach ($iterator->current() as [$line_number, $line]) {
-                $assembler = new FromString($line);
-                $log_entry_dto = $assembler->assemble();
+                $log_entry_dto = $this->assembler->assemble($line);
 
                 // Entity DTOs that cannot be assembled means that the supplied data to it is not enough to create one.
                 // Thus, we can skip it.

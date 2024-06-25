@@ -16,6 +16,7 @@ class LogEntryDtoImporterTest extends KernelTestCase
 {
     protected EntityManagerInterface $entityManager;
     protected LogEntryDtoImporter $logImporter;
+    protected FromString $assembler;
 
     protected function setUp(): void
     {
@@ -25,16 +26,15 @@ class LogEntryDtoImporterTest extends KernelTestCase
 
         $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
         $this->logImporter = new LogEntryDtoImporter($this->entityManager, new FromLogEntryDto());
+        $this->assembler = new FromString();
     }
 
     public function testImport_whenNotEmpty_shouldSaveToDatabase()
     {
-        $valid_log_entry = new FromString('USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400');
+        $line = 'USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400';
         $repository = $this->entityManager->getRepository(LogEntry::class);
 
-        $this->logImporter->import([
-            $valid_log_entry->assemble()
-        ]);
+        $this->logImporter->import([$this->assembler->assemble($line)]);
         $log_entries = $repository->findAll();
         /** @var LogEntry $log_entry */
         [$log_entry] = $log_entries;
@@ -54,10 +54,10 @@ class LogEntryDtoImporterTest extends KernelTestCase
         $assembler = $this->createMock(FromLogEntryDto::class);
         $assembler->expects($this->once())->method('assemble')->willReturn(null);
         $log_importer = new LogEntryDtoImporter($this->entityManager, $assembler);
-        $valid_log_entry = new FromString('USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400');
+        $line = 'USER-SERVICE - - [17/Aug/2018:09:21:54 +0000] "POST /users HTTP/1.1" 400';
         $repository = $this->entityManager->getRepository(LogEntry::class);
 
-        $log_importer->import([$valid_log_entry->assemble()]);
+        $log_importer->import([$this->assembler->assemble($line)]);
         $log_entries = $repository->findAll();
 
         $this->assertEmpty($log_entries);

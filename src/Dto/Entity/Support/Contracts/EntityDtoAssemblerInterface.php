@@ -12,10 +12,12 @@ namespace Dreadnaut\LogAnalyticsBundle\Dto\Entity\Support\Contracts;
 interface EntityDtoAssemblerInterface
 {
     /**
-     * Creates an {@see EntityDtoInterface} object out of the data supplied to the assembler. If one cannot be made, due
-     * to, let's say data constraint errors, `null` will be returned.
+     * Creates an {@see EntityDtoInterface} object out of supplied input. If one cannot be made, due to, let's say data
+     * constraint errors, `null` will be returned.
+     *
+     * @param mixed $input
      *
      * @return EntityDtoInterface|null
      */
-    public function assemble(): ?EntityDtoInterface;
+    public function assemble(mixed $input): ?EntityDtoInterface;
 }

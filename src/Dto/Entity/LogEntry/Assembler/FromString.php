@@ -38,16 +38,12 @@ class FromString implements EntityDtoAssemblerInterface
      */
     const string PATTERN = '/^([A-Z]+-SERVICE) - - \[(\d{2}\/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\] "(GET|POST|PUT|DELETE|PATCH) (\/[\w\/]*) HTTP\/(\d\.\d)" ([1-5]\d{2})$/';
 
-    public function __construct(protected string $input)
-    {
-    }
-
     /**
      * @inheritDoc
      */
-    public function assemble(): ?EntityDtoInterface
+    public function assemble(mixed $input): ?EntityDtoInterface
     {
-        $segments = array_values(array_filter(preg_split(self::PATTERN, $this->input, -1, PREG_SPLIT_DELIM_CAPTURE)));
+        $segments = array_values(array_filter(preg_split(self::PATTERN, $input, -1, PREG_SPLIT_DELIM_CAPTURE)));
 
         if (count($segments) < 5) {
             return null;
