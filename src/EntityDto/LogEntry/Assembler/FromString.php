@@ -39,7 +39,7 @@ final class FromString implements EntityDtoAssemblerInterface
      * 6. HTTP status code
      */
     // phpcs:ignore
-    public const string PATTERN = '/^([A-Z]+-SERVICE) - - \[(\d{2}\/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\] "(GET|POST|PUT|DELETE|PATCH) (\/[\w\/]*) HTTP\/(\d\.\d)" ([1-5]\d{2})$/';
+    public const string PATTERN = '/^([A-Z]+-SERVICE) - - \[(\d{2}\/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/\d{4}:\d{2}:\d{2}:\d{2} \+\d{4})\] "(GET|POST|PUT|DELETE|PATCH) ((?:https?:\/\/)?(?:[A-Za-z0-9.-]+)?(?:\/[\w\/?=&%\-#.]+)?) HTTP\/(\d\.\d)" ([1-5]\d{2})$/';
 
     /**
      * @inheritDoc

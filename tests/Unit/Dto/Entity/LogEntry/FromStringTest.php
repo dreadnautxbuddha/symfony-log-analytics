@@ -20,6 +20,22 @@ class FromStringTest extends TestCase
         $this->assertNull($entityDto);
     }
 
+    /**
+     * @dataProvider validUrls
+     */
+    // phpcs:ignore
+    public function testAssemble_whenRequestTargetIsAValidUrl_shouldReturnEntityDto(
+        string $input,
+        string $expectedRequestTarget
+    ) {
+        $assembler = new FromString();
+
+        /** @var \Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\LogEntry $entityDto */
+        $entityDto = $assembler->assemble($input);
+
+        $this->assertEquals($expectedRequestTarget, $entityDto->httpRequestTarget);
+    }
+
     public static function invalidInput(): array
     {
         return [
@@ -52,6 +68,33 @@ class FromStringTest extends TestCase
             ['201'],
             // phpcs:ignore
             ['INVOICE-SERVICE - - [18/Aug/2018:10:26:53 +0000] "POST /invoices HTTP/1.1" 201 INVOICE-SERVICE - - [18/Aug/2018:10:26:53 +0000] "POST /invoices HTTP/1.1" 201'],
+        ];
+    }
+
+    public static function validUrls(): array
+    {
+        return [
+            [
+                'INVOICE-SERVICE - - [17/Aug/2018:09:22:59 +0000] "POST /my/test/endpoint HTTP/1.1" 400',
+                '/my/test/endpoint',
+            ],
+            [
+                // phpcs:ignore
+                'INVOICE-SERVICE - - [17/Aug/2018:09:22:59 +0000] "POST /my/test/endpoint?query1=value1&query2=value2 HTTP/1.1" 400',
+                '/my/test/endpoint?query1=value1&query2=value2'
+            ],
+            [
+                'INVOICE-SERVICE - - [17/Aug/2018:09:22:59 +0000] "POST https://www.google.com HTTP/1.1" 400',
+                'https://www.google.com'
+            ],
+            [
+                'INVOICE-SERVICE - - [17/Aug/2018:09:22:59 +0000] "POST http://www.google.com HTTP/1.1" 400',
+                'http://www.google.com'
+            ],
+            [
+                'INVOICE-SERVICE - - [17/Aug/2018:09:22:59 +0000] "POST http://hub.blogspot.com/#posts HTTP/1.1" 400',
+                'http://hub.blogspot.com/#posts'
+            ],
         ];
     }
 }
