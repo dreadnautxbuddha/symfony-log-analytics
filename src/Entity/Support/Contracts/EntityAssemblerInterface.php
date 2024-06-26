@@ -9,7 +9,7 @@ use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
  * {@see \Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface dto} into an
  * {@see EntityInterface entity}
  *
- * @package Dreadnaut\LogAnalyticsBundle\Entity\Assembler\Support\Contracts
+ * @package Dreadnaut\LogAnalyticsBundle\Entity\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

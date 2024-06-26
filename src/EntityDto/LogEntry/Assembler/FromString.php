@@ -18,7 +18,7 @@ use function preg_split;
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
- * @package Dreadnaut\LogAnalyticsBundle\Assembler\DTO\LogEntry
+ * @package Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * validator will not try and parse the incoming value into a type that will eventually not result in the error. ie.,
  * supplying a value of `0.1` to a type-hint of `int` will result in the value being read as `0`
  *
- * @package Dreadnaut\LogAnalyticsBundle\Command\Import\Log
+ * @package Dreadnaut\LogAnalyticsBundle\Command\Import\Log\Input
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

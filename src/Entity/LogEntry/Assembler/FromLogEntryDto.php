@@ -11,7 +11,7 @@ use Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts\EntityDtoInterface;
 /**
  * Maps an {@see EntityDtoInterface entity dto} into an {@see EntityInterface entity}
  *
- * @package Dreadnaut\LogAnalyticsBundle\Entity\Assembler\LogEntry
+ * @package Dreadnaut\LogAnalyticsBundle\Entity\LogEntry\Assembler
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */

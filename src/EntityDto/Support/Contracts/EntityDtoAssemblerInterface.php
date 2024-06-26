@@ -5,7 +5,7 @@ namespace Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts;
 /**
  * An assembler is responsible for transforming input from various data sources into data transfer objects.
  *
- * @package Dreadnaut\LogAnalyticsBundle\EntityDto\Interface
+ * @package Dreadnaut\LogAnalyticsBundle\EntityDto\Support\Contracts
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
