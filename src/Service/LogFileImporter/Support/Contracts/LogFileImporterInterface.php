@@ -2,7 +2,7 @@
 
 namespace Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\Support\Contracts;
 
-use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIteratorInterface;
+use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIterator;
 use Dreadnaut\LogAnalyticsBundle\Util\File\Support\Contracts;
 
 interface LogFileImporterInterface
@@ -10,10 +10,10 @@ interface LogFileImporterInterface
     /**
      * Imports the log entries from the file iterator
      *
-     * @param SplFileObjectIteratorInterface $iterator
-     * @param int                            $offset
-     * @param int                            $chunkSize
-     * @param int|null                       $limit
+     * @param SplFileObjectIterator $iterator
+     * @param int                   $offset
+     * @param int                   $chunkSize
+     * @param int|null              $limit
      *
      * @return void
      */

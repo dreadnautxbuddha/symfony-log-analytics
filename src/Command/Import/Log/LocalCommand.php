@@ -4,7 +4,7 @@ namespace Dreadnaut\LogAnalyticsBundle\Command\Import\Log;
 
 use Dreadnaut\LogAnalyticsBundle\Command\Import\Log\Input\Cli;
 use Dreadnaut\LogAnalyticsBundle\Service\LogFileImporter\Support\Contracts\LogFileImporterInterface;
-use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIteratorInterface;
+use Dreadnaut\LogAnalyticsBundle\Util\File\SplFileObjectIterator;
 use SplFileObject;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -86,7 +86,7 @@ class LocalCommand extends Command
 
         $this
             ->logFileImporter
-            ->import(new SplFileObjectIteratorInterface(new SplFileObject($path)), $offset, $chunkSize, $limit);
+            ->import(new SplFileObjectIterator(new SplFileObject($path)), $offset, $chunkSize, $limit);
 
         return Command::SUCCESS;
     }

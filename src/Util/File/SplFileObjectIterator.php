@@ -18,9 +18,7 @@ use function is_null;
  *
  * @author  Peter Cortez <innov.petercortez@gmail.com>
  */
-class SplFileObjectIteratorInterface implements
-    Contracts\ChunkableIteratorInterface,
-    Contracts\PaginableIteratorInterface
+class SplFileObjectIterator implements Contracts\ChunkableIteratorInterface, Contracts\PaginableIteratorInterface
 {
     /**
      * The number of rows to chunk the file into when iterating via {@see SplFileObject::each()}
@@ -51,7 +49,7 @@ class SplFileObjectIteratorInterface implements
      * the value of {@see SplFileObject::fgets()}.
      *
      * This callback, when run, should ALWAYS move the pointer to the next item in
-     * {@see SplFileObjectIteratorInterface::$file} to ensure that we are always getting the right line.
+     * {@see SplFileObjectIterator::$file} to ensure that we are always getting the right line.
      *
      * @var Closure
      */

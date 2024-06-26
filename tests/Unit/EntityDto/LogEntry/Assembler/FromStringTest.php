@@ -1,6 +1,6 @@
 <?php
 
-namespace Dreadnaut\LogAnalyticsBundle\Tests\Unit\Dto\Entity\LogEntry;
+namespace Dreadnaut\LogAnalyticsBundle\Tests\Unit\EntityDto\LogEntry\Assembler;
 
 use Dreadnaut\LogAnalyticsBundle\EntityDto\LogEntry\Assembler\FromString;
 use PHPUnit\Framework\TestCase;
