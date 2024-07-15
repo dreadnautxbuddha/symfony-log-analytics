@@ -1,5 +1,5 @@
 # Overview
-This project serves as a technical exam for Legal One.
+This project gives users the ability to import a log file and count logs based on a set of queries.
 
 # Setup
 
@@ -17,7 +17,7 @@ then in your `.env.local` file, supply the following environment variables:
 1. `POSTGRES_USER` _example: `myusername`_
 2. `POSTGRES_PASSWORD` _example: `mypassword`_
 3. `POSTGRES_DB` _example: `mydatabase`_
-4. `SERVER_NAME` _example: `analytics.legal-one.localhost`_
+4. `SERVER_NAME` _example: `analytics.logging-system.localhost`_
 
 After that, you can proceed with the next steps. 
 
